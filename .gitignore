@@ -10,3 +10,4 @@ local.properties
 paupark.iml
 settings.gradle
 app/build/
+app/app.iml
