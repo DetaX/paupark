@@ -1,11 +1,11 @@
 package fr.univpau.paupark.screen;
-import java.util.ArrayList;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.asynctask.ParkingsTask;
 import fr.univpau.paupark.listener.ParkingClickListener;
@@ -39,25 +42,31 @@ public class ParkingsFragment extends Fragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		MenuItem add = menu.findItem(R.id.add);  
+		MenuItem add = menu.findItem(R.id.add);
 		add.setVisible(false);
 	    super.onCreateOptionsMenu(menu, inflater);
 	}
-	
+
 	@Override
 	public void onStart() {
 		super.onStart();
 		parkings = MainScreen.parkings;
 		ListView list = (ListView)container.findViewById(R.id.list_parking);
 	    adapter = new ParkingAdapter(container.getContext(), fr.univpau.paupark.R.layout.parking_item, parkings);
-	    list.setAdapter(adapter);  
+	    list.setAdapter(adapter);
 	    list.setOnItemClickListener(new ParkingClickListener(parkings));
-	    
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this.getActivity());
+        if (prefs.getBoolean("gps", false)) {
+            LocationManager locationManager = (LocationManager) this.getActivity().getSystemService(Context.LOCATION_SERVICE);
+            SharedPreferences.Editor prefEditor = prefs.edit();
+            prefEditor.putBoolean("gps", locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER));
+            prefEditor.commit();
+        }
 	    if(ParkingsFragment.firstTime){
 		    refresh();
 	    }
 	    else {
-	    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(container.getContext());
 	    	if (prefs.getBoolean("gps", false))
 	    		adapter.getFilter().filter(String.valueOf(prefs.getInt("range", 2500)+100));
 	    }

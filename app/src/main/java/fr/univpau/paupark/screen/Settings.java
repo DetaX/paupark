@@ -1,14 +1,14 @@
 package fr.univpau.paupark.screen;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
+
 import fr.univpau.paupark.util.Util;
 
 public class Settings extends PreferenceActivity implements OnSharedPreferenceChangeListener{
@@ -22,9 +22,9 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 		 SharedPreferences prefs = PreferenceManager
 		            .getDefaultSharedPreferences(this);
 		 prefs.registerOnSharedPreferenceChangeListener(this);
-		 
+
 	}
-	
+
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
@@ -34,9 +34,9 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 			boolean enabled = sharedPreferences.getBoolean(key, false);
 			fragment.setSeekBarEnabled(enabled);
 			if (enabled) {
-				LocationManager locationManager = (LocationManager) this.getSystemService("location");
+				LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-     	        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+     	        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !this.isFinishing()){
      	        	Util.showGPSDisabledAlertToUser(this,fragment.getGPS());
      	        }
 			}

@@ -1,7 +1,5 @@
 package fr.univpau.paupark.util;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,6 +9,8 @@ import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.listener.ActivateGPSDismissListener;
 import fr.univpau.paupark.listener.ActivateGPSListener;
@@ -68,7 +68,7 @@ public class Util {
 		view.setText(content);
 	}
 	
-	public static void showGPSDisabledAlertToUser(final Activity context, CheckBoxPreference gps){
+	public static void showGPSDisabledAlertToUser(Activity context, CheckBoxPreference gps){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setMessage("Le GPS est désactivé sur votre appareil. Voulez-vous l'activer ?")
         .setCancelable(false)
