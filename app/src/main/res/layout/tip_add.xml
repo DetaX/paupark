@@ -1,0 +1,149 @@
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    android:scrollbarAlwaysDrawVerticalTrack="true"
+	    tools:context="${relativePackage}.${activityClass}" >
+	    
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+				android:text="@string/add_tip"
+				android:textSize="20sp"
+				android:layout_gravity="center_horizontal"
+				/>
+	        
+	        <LinearLayout 
+		        android:layout_width="fill_parent"
+		   		android:layout_height="0dp"
+		   		android:layout_weight="1"
+		    	android:orientation="horizontal"
+	           	>
+	            <TextView
+		            android:layout_width="0dp"
+		            android:layout_weight="1"
+		            android:layout_height="wrap_content"
+					android:text="Nom"
+					/>
+	            
+	            <EditText 
+	                android:id="@+id/add_nom"
+	                android:layout_width="0dp"
+	                android:layout_weight="2"
+	                android:layout_height="wrap_content"
+					android:singleLine="true"
+	            />
+	            
+	        </LinearLayout>
+	        
+	        <LinearLayout 
+		        android:layout_width="fill_parent"
+		   		android:layout_height="0dp"
+		    	android:orientation="horizontal"
+		    	android:layout_weight="1"
+	           	>
+	            <TextView
+		            android:layout_width="0dp"
+		            android:layout_weight="1"
+		            android:layout_height="wrap_content"
+					android:text="Adresse"
+					/>
+	            
+	            <EditText 
+	                android:id="@+id/add_adresse"
+	                android:layout_width="0dp"
+	                android:layout_weight="2"
+	                android:layout_height="wrap_content"
+	                android:maxLines="3"
+	            />
+	            
+	        </LinearLayout>
+	        
+	        <LinearLayout 
+		        android:layout_width="fill_parent"
+		   		android:layout_height="0dp"
+		   		android:layout_weight="1"
+		    	android:orientation="horizontal"
+	           	>
+	            <TextView
+		            android:layout_width="0dp"
+		            android:layout_weight="1"
+		            android:layout_height="wrap_content"
+					android:text="Commune"				 
+					/>
+	            
+	            <EditText 
+	                android:id="@+id/add_commune"
+	                android:layout_width="0dp"
+	                android:layout_weight="2"
+	                android:layout_height="wrap_content"
+	                android:singleLine="true"
+	            />
+	            
+	        </LinearLayout>
+	        
+	        <LinearLayout 
+		        android:layout_width="fill_parent"
+		   		android:layout_height="0dp"
+		   		android:layout_weight="1"
+		    	android:orientation="horizontal"
+	           	>
+	            <TextView
+		            android:layout_width="0dp"
+		            android:layout_weight="1"
+		            android:layout_height="wrap_content"
+					android:text="Places"
+					/>
+	            
+	            <EditText 
+	                android:id="@+id/add_places"
+	                android:layout_width="0dp"
+	                android:layout_weight="2"
+	                android:layout_height="wrap_content"
+	                android:inputType="number"
+	                 android:singleLine="true"
+	                 android:maxLength="4"
+	            />
+	            
+	        </LinearLayout>
+	        
+	        <LinearLayout 
+		        android:layout_width="fill_parent"
+		   		android:layout_height="0dp"
+		    	android:orientation="horizontal"
+		    	android:layout_weight="1"
+	           	>
+	            <TextView
+		            android:layout_width="0dp"
+		            android:layout_weight="1"
+		            android:layout_height="wrap_content"
+					android:text="Commentaire"
+					/>
+	            
+	            <EditText 
+	                android:id="@+id/add_commentaire"
+	                android:layout_width="0dp"
+	                android:layout_weight="2"
+	                android:layout_height="wrap_content"
+	                android:maxLines="3"
+	            />
+	            
+	        </LinearLayout>
+	        
+	        <Button 
+	            android:id="@+id/button_add_tip"
+	            android:layout_height="wrap_content"
+	            android:layout_width="wrap_content"
+	            android:layout_gravity="center_horizontal"
+	            android:text="@string/add_tip"
+	            />
+	
+	</LinearLayout>
+</ScrollView>

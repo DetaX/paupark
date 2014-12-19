@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">paupark</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_activity_parking_screen">ParkingScreen</string>
+    <string name="nom">NOM</string>
+    <string name="commune_places">Commune, xxx places</string>
+    <string name="icon_ouvrage">icon_ouvrage</string>
+    <string name="icon_prix">icon_prix</string>
+    <string name="title_activity_tip_screen">TipScreen</string>
+    <string name="title_activity_main_screen">MainScreen</string>
+    <string name="parkings">Parkings</string>
+    <string name="tips">Bons Plans</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_tip_add_screen">TipAddScreen</string>
+    <string name="add_tip">Ajouter un bon plan</string>
+
+</resources>
