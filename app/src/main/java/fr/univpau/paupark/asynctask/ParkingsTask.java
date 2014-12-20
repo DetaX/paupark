@@ -1,9 +1,12 @@
 package fr.univpau.paupark.asynctask;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.widget.ListView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -13,17 +16,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.preference.PreferenceManager;
-import android.widget.ListView;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 import fr.univpau.paupark.listener.NoDataDialogListener;
 import fr.univpau.paupark.pojo.Parking;
-import fr.univpau.paupark.presenter.ParkingAdapter;
 import fr.univpau.paupark.screen.ParkingsFragment;
 
 public class ParkingsTask extends AsyncTask<Void, Void, ArrayList<Parking>> {
@@ -31,14 +30,16 @@ public class ParkingsTask extends AsyncTask<Void, Void, ArrayList<Parking>> {
 	private Context context;
 	ListView list;
 	String result="Erreur.";
-	ParkingAdapter adapter;
+
 	ArrayList<Parking> parkings;
+    private ParkingsFragment fragment;
 	private final static String url="http://opendata.agglo-pau.fr/sc/webserv.php?serv=getSj&ui=542293D8B5&did=18&proj=WGS84";
 	
-	public ParkingsTask (Context context, ParkingAdapter adapter, ArrayList<Parking> parkings) {
+	public ParkingsTask (Context context, ArrayList<Parking> parkings, ParkingsFragment fragment) {
 		this.context=context;
-		this.adapter=adapter;
+
 		this.parkings=parkings;
+        this.fragment = fragment;
 	}
 	
 	@Override	
@@ -107,9 +108,10 @@ public class ParkingsTask extends AsyncTask<Void, Void, ArrayList<Parking>> {
 		if (parkings.size() > 0) {
 			ParkingsFragment.firstTime = false;
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-			if (prefs.getBoolean("gps", false))
-	    		adapter.getFilter().filter(String.valueOf(prefs.getInt("range", 2500)+100));
-			adapter.notifyDataSetChanged();
+            fragment.makePages();
+			/*if (prefs.getBoolean("gps", false))
+	    		adapter.getFilter().filter(String.valueOf(prefs.getInt("range", 2500)+100));*/
+
 		}
 		else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);

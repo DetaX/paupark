@@ -1,18 +1,19 @@
 package fr.univpau.paupark.listener;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.asynctask.TipAddTask;
 import fr.univpau.paupark.pojo.Tip;
+import fr.univpau.paupark.screen.Settings;
 
 public class TipAddListener implements OnClickListener {
 	
@@ -44,7 +45,7 @@ public class TipAddListener implements OnClickListener {
 
 			SharedPreferences prefs = PreferenceManager
 		            .getDefaultSharedPreferences(context);
-		String pseudo = prefs.getString("pseudo", "Anonymous");
+		String pseudo = prefs.getString(Settings.PSEUDO_SETTING_KEY, "Anonymous");
 		pseudo = (!pseudo.equals("")) ? pseudo : "Anonymous";
 			Tip tip = new Tip(nom, adresse, commune, Integer.parseInt(places), commentaire,	pseudo, -1.d, 0);
 			TipAddTask tipAddTask = new TipAddTask(context, tips, tip);

@@ -13,7 +13,13 @@ import fr.univpau.paupark.util.Util;
 
 public class Settings extends PreferenceActivity implements OnSharedPreferenceChangeListener{
 	SettingsFragment fragment;
-	@Override
+    public static final String GEOLOCATION_SETTING_KEY = "gps";
+    public static final String GEOLOCATION_RANGE_SETTING_KEY = "range";
+    public static final String PSEUDO_SETTING_KEY = "pseudo";
+    public static final String PAGINATION_SETTING_KEY = "pagination";
+    public static final int PAGINATION_MAX_PARKINGS = 10;
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		 fragment = new SettingsFragment();
@@ -30,7 +36,7 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 			String key) {
 
 		switch(key){
-		case "gps":
+		case GEOLOCATION_SETTING_KEY:
 			boolean enabled = sharedPreferences.getBoolean(key, false);
 			fragment.setSeekBarEnabled(enabled);
 			if (enabled) {
@@ -41,13 +47,13 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
      	        }
 			}
 			break;
-		case "range":
+		case GEOLOCATION_RANGE_SETTING_KEY:
 			int range = sharedPreferences.getInt(key, 0) + 100;
 			fragment.setTitle("Distance maximum : " + range);
 			break;
-		case "pagination":
+		case PAGINATION_SETTING_KEY:
 			break;
-		case "pseudo":
+		case PSEUDO_SETTING_KEY:
 			break;
 		default:
 			break;
@@ -57,7 +63,7 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == Util.GPS_STATUS && resultCode == 0){
-        	LocationManager locationManager = (LocationManager) this.getSystemService("location");
+        	LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
  	        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
  	        	fragment.getGPS().setChecked(false);

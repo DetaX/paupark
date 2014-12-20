@@ -1,23 +1,23 @@
 package fr.univpau.paupark.screen;
 
-import java.util.ArrayList;
-
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import java.util.ArrayList;
+
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.listener.TabListener;
 import fr.univpau.paupark.pojo.Parking;
 import fr.univpau.paupark.pojo.Tip;
 
 
-public class MainScreen extends Activity {
+public class MainScreen extends FragmentActivity {
 	public static ArrayList<Parking> parkings = new ArrayList<Parking>();
 	public static ArrayList<Tip> tips = new ArrayList<Tip>();
 	private ActionBar actionBar;
