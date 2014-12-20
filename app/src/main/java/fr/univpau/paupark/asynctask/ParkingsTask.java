@@ -108,10 +108,7 @@ public class ParkingsTask extends AsyncTask<Void, Void, ArrayList<Parking>> {
 		if (parkings.size() > 0) {
 			ParkingsFragment.firstTime = false;
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            fragment.makePages();
-			/*if (prefs.getBoolean("gps", false))
-	    		adapter.getFilter().filter(String.valueOf(prefs.getInt("range", 2500)+100));*/
-
+            fragment.makePages(parkings);
 		}
 		else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
@@ -120,8 +117,7 @@ public class ParkingsTask extends AsyncTask<Void, Void, ArrayList<Parking>> {
 					.setCancelable(false)
 					.setNeutralButton("Options", new NoDataDialogListener(context))
 					.setPositiveButton("Ok",new NoDataDialogListener(context));
-				
-	 
+
 					AlertDialog alertDialog = alertDialogBuilder.create();
 	 
 					alertDialog.show();

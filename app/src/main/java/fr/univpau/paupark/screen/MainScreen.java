@@ -2,9 +2,10 @@ package fr.univpau.paupark.screen;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,14 +18,16 @@ import fr.univpau.paupark.pojo.Parking;
 import fr.univpau.paupark.pojo.Tip;
 
 
-public class MainScreen extends FragmentActivity {
-	public static ArrayList<Parking> parkings = new ArrayList<Parking>();
-	public static ArrayList<Tip> tips = new ArrayList<Tip>();
+public class MainScreen extends Activity {
+	public static ArrayList<Parking> PARKINGS = new ArrayList<Parking>();
+	public static ArrayList<Tip> TIPS = new ArrayList<Tip>();
 	private ActionBar actionBar;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_screen);
+        Settings.PREFERENCE = PreferenceManager.getDefaultSharedPreferences(this);
 		actionBar = getActionBar();
 		
 		actionBar.setDisplayShowHomeEnabled(false);

@@ -1,27 +1,19 @@
 package fr.univpau.paupark.presenter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.univpau.paupark.pojo.Parking;
 
-public class ParkingAdapter extends ArrayAdapter<Parking> implements Filterable{
+public class ParkingAdapter extends ArrayAdapter<Parking> {
 
 	private final Context context;
 	private List<Parking> parkings;
@@ -62,97 +54,6 @@ public class ParkingAdapter extends ArrayAdapter<Parking> implements Filterable{
 		nom.setText(parking.getNom());
 		commune_places.setText(parking.getCommune() + " - " + parking.getPlaces() + " places");
 		return row_view;
-	}
-	
-	@Override
-	public Filter getFilter(){
-		if(customFilter == null){
-			customFilter = new seekBarFilter();
-		}
-		return customFilter; 
-				
-	}
-	
-	private class seekBarFilter extends Filter{
-		double longitude;
-		double latitude;
-		
-		private final LocationListener locationListener = new LocationListener() {
-		    public void onLocationChanged(Location location) {
-		        longitude = location.getLongitude();
-		        latitude = location.getLatitude();
-
-		    }
-
-			@Override
-			public void onStatusChanged(String provider, int status,
-					Bundle extras) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onProviderEnabled(String provider) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onProviderDisabled(String provider) {
-				// TODO Auto-generated method stub
-				
-			}
-		};
-		@Override
-		protected FilterResults performFiltering(CharSequence constraint) {
-			FilterResults res = new FilterResults();
-			int range = 2500;
-			try {
-				range = Integer.parseInt(constraint.toString());
-			}
-			catch(NumberFormatException e) {
-			}
-			LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE); 
-			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-			Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-			if (location != null) {
-				longitude = location.getLongitude();
-				latitude = location.getLatitude();
-				float results[] = new float[1];
-				ArrayList<Parking> p = new ArrayList<Parking>();
-				for(Parking pk:parkings){
-					Location.distanceBetween(latitude, longitude, pk.getCoord()[0], pk.getCoord()[1], results);
-					Log.i("distance", String.valueOf(results[0]));
-					if(results[0] < range) {
-						p.add(pk);
-					}
-				}
-			
-			res.values = p;
-			res.count = p.size();
-			}
-			return res;
-		}
-
-		@Override
-		protected void publishResults(CharSequence constraint,
-				FilterResults results) {
-			// Now we have to inform the adapter about the new list filtered
-			parkings = (ArrayList<Parking>) results.values;
-			if (results.count == 0) {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-				alertDialogBuilder
-					.setMessage("Il n'y a pas de parking à afficher selon vos préférences. Veuillez augmenter la distance maximum de géolocalisation")
-					.setCancelable(true);
-				
-					AlertDialog alertDialog = alertDialogBuilder.create();
-	 
-					alertDialog.show();
-			}
-	        notifyDataSetChanged();
-			
-		}
-		
 	}
 
 }

@@ -7,7 +7,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 
 import fr.univpau.paupark.util.Util;
 
@@ -18,6 +17,7 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
     public static final String PSEUDO_SETTING_KEY = "pseudo";
     public static final String PAGINATION_SETTING_KEY = "pagination";
     public static final int PAGINATION_MAX_PARKINGS = 10;
+    public static SharedPreferences PREFERENCE;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +25,8 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 		 fragment = new SettingsFragment();
 		 getFragmentManager().beginTransaction()
          .replace(android.R.id.content, fragment).commit();
-		 SharedPreferences prefs = PreferenceManager
-		            .getDefaultSharedPreferences(this);
-		 prefs.registerOnSharedPreferenceChangeListener(this);
+
+		 PREFERENCE.registerOnSharedPreferenceChangeListener(this);
 
 	}
 

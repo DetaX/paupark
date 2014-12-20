@@ -13,7 +13,7 @@ public class TipAddScreen extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tip_add);
 		Button button = (Button)findViewById(R.id.button_add_tip);
-		button.setOnClickListener(new TipAddListener(this, MainScreen.tips));
+		button.setOnClickListener(new TipAddListener(this, MainScreen.TIPS));
 		
 	}
 }

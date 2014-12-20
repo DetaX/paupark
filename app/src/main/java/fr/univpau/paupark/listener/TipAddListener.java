@@ -1,8 +1,6 @@
 package fr.univpau.paupark.listener;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -40,12 +38,9 @@ public class TipAddListener implements OnClickListener {
 		EditText edit_commentaire = (EditText)parent.findViewById(R.id.add_commentaire);
 		String commentaire = edit_commentaire.getText().toString();
 
-
 		if(!nom.equals("") && !adresse.equals("") && !commune.equals("") && !places.equals("") && !commentaire.equals("")){
 
-			SharedPreferences prefs = PreferenceManager
-		            .getDefaultSharedPreferences(context);
-		String pseudo = prefs.getString(Settings.PSEUDO_SETTING_KEY, "Anonymous");
+		String pseudo = Settings.PREFERENCE.getString(Settings.PSEUDO_SETTING_KEY, "Anonymous");
 		pseudo = (!pseudo.equals("")) ? pseudo : "Anonymous";
 			Tip tip = new Tip(nom, adresse, commune, Integer.parseInt(places), commentaire,	pseudo, -1.d, 0);
 			TipAddTask tipAddTask = new TipAddTask(context, tips, tip);
@@ -57,8 +52,6 @@ public class TipAddListener implements OnClickListener {
 			Toast toast = Toast.makeText(context, "Veuillez remplir les champs correctement", Toast.LENGTH_SHORT);
 			toast.show();
 		}
-		
-
 	}
 
 }

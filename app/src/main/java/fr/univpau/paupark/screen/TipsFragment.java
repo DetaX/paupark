@@ -1,13 +1,14 @@
 package fr.univpau.paupark.screen;
 
-import java.util.ArrayList;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.asynctask.TipsTask;
 import fr.univpau.paupark.listener.TipClickListener;
@@ -30,7 +31,7 @@ public class TipsFragment extends Fragment {
 	@Override
 	public void onStart() {
 		super.onStart();
-		tips = MainScreen.tips;
+		tips = MainScreen.TIPS;
 		ListView list = (ListView)container.findViewById(R.id.list_tip);
 	    adapter = new TipAdapter(container.getContext(), fr.univpau.paupark.R.layout.tip_item, tips);
 	    list.setAdapter(adapter);  
