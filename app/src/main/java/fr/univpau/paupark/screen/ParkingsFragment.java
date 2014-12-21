@@ -74,6 +74,7 @@ public class ParkingsFragment extends Fragment {
     }
 
     public void makePages(ArrayList<Parking> parkings) {
+        parkings = ParkingFilter.filter(parkings);
         if (parkings.size() > 0) {
             int size = (Settings.PREFERENCE.getBoolean(Settings.PAGINATION_SETTING_KEY, false)) ? Settings.PAGINATION_MAX_PARKINGS : parkings.size();
             Vector<View> pages = new Vector<View>();
@@ -92,8 +93,7 @@ public class ParkingsFragment extends Fragment {
             CustomPagerAdapter pager_adapter = new CustomPagerAdapter(pages);
             vp.setAdapter(pager_adapter);
             filteredList = parkings;
-        }
-        else {
+        } else {
             ViewPager vp = (ViewPager) getActivity().findViewById(R.id.pager);
             CustomPagerAdapter pager_adapter = new CustomPagerAdapter(new Vector<View>());
             vp.setAdapter(pager_adapter);
@@ -105,17 +105,38 @@ public class ParkingsFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         MenuItem add = menu.findItem(R.id.add);
         add.setVisible(false);
-        //SubMenu menuFilter = menu.addSubMenu(0, 5, 1, null);
+
         final MenuItem filterMenu = menu.findItem(R.id.filtermenu);
         inflater.inflate(R.menu.filter, filterMenu.getSubMenu());
         MenuItem nom = filterMenu.getSubMenu().findItem(R.id.nomMenu);
         nom.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                SearchView searchFilter = new SearchView(getActivity());
+                final SearchView searchFilter = new SearchView(getActivity());
                 searchFilter.setIconifiedByDefault(false);
                 getActivity().getActionBar().setCustomView(searchFilter);
                 getActivity().getActionBar().setDisplayShowCustomEnabled(true);
+                searchFilter.setQuery(ParkingFilter.nom, false);
+                searchFilter.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        searchFilter.clearFocus();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        if (s.length() > 0) {
+                            ParkingFilter.nomFilter = true;
+                            ParkingFilter.nom = s;
+                        } else {
+                            ParkingFilter.nomFilter = false;
+                            ParkingFilter.nom = "";
+                        }
+                        makePages(parkings);
+                        return false;
+                    }
+                });
                 return false;
             }
         });
@@ -130,7 +151,7 @@ public class ParkingsFragment extends Fragment {
                     RadioButton radio;
                     if (ParkingFilter.free)
                         radio = (RadioButton) getActivity().findViewById(R.id.free);
-                     else
+                    else
                         radio = (RadioButton) getActivity().findViewById(R.id.paying);
                     radio.setChecked(true);
                 }
@@ -138,16 +159,13 @@ public class ParkingsFragment extends Fragment {
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int i) {
                         ParkingFilter.priceFilter = true;
-                        if (i == R.id.paying) {
+                        if (i == R.id.paying)
                             ParkingFilter.free = false;
-                            makePages(ParkingFilter.filter(parkings));
-                        } else if (i == R.id.free) {
+                        else if (i == R.id.free)
                             ParkingFilter.free = true;
-                            makePages(ParkingFilter.filter(parkings));
-                        } else {
+                        else
                             ParkingFilter.priceFilter = false;
-                            makePages(ParkingFilter.filter(parkings));
-                        }
+                        makePages(parkings);
                     }
                 });
                 return false;
@@ -172,16 +190,14 @@ public class ParkingsFragment extends Fragment {
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int i) {
                         ParkingFilter.ouvrageFilter = true;
-                        if (i == R.id.underground) {
+                        if (i == R.id.underground)
                             ParkingFilter.underground = true;
-                            makePages(ParkingFilter.filter(parkings));
-                        } else if (i == R.id.outdoor) {
+                        else if (i == R.id.outdoor)
                             ParkingFilter.underground = false;
-                            makePages(ParkingFilter.filter(parkings));
-                        } else {
+                        else
                             ParkingFilter.ouvrageFilter = false;
-                            makePages(ParkingFilter.filter(parkings));
-                        }
+                        makePages(parkings);
+
                     }
                 });
                 return false;
@@ -216,10 +232,10 @@ public class ParkingsFragment extends Fragment {
                             ParkingFilter.placesFilter = false;
                         else
                             ParkingFilter.placesFilter = true;
+
                         ParkingFilter.min = min;
                         ParkingFilter.max = max;
-
-                        makePages(ParkingFilter.filter(parkings));
+                        makePages(parkings);
                     }
                 });
                 editMaxPlace.addTextChangedListener(new TextWatcher() {
@@ -242,7 +258,7 @@ public class ParkingsFragment extends Fragment {
                             ParkingFilter.placesFilter = true;
                         ParkingFilter.min = min;
                         ParkingFilter.max = max;
-                        makePages(ParkingFilter.filter(parkings));
+                        makePages(parkings);
                     }
                 });
                 return false;

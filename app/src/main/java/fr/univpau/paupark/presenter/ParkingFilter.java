@@ -13,12 +13,14 @@ public abstract class ParkingFilter {
     public static boolean priceFilter = false;
     public static boolean ouvrageFilter = false;
     public static boolean placesFilter = false;
+    public static boolean nomFilter = false;
     public static int min;
     public static int max;
     public static double latitude;
     public static double longitude;
     public static boolean free;
     public static boolean underground;
+    public static String nom;
 
     public static ArrayList<Parking> gps(ArrayList<Parking> parkings) {
         int range = 5000;
@@ -43,13 +45,21 @@ public abstract class ParkingFilter {
         return filteredList;
     }
 
+    public static ArrayList<Parking> nom(ArrayList<Parking> parkings) {
+        ArrayList<Parking> filteredList = new ArrayList<Parking>();
+        for(Parking pk:parkings) {
+            if (pk.getNom().toLowerCase().contains(nom.toLowerCase()))
+                filteredList.add(pk);
+        }
+        return filteredList;
+    }
+
     public static ArrayList<Parking> ouvrage(ArrayList<Parking> parkings) {
         ArrayList<Parking> filteredList = new ArrayList<Parking>();
         for(Parking pk:parkings) {
             if (pk.isSouterrain() == underground)
                 filteredList.add(pk);
         }
-        Log.i("taille", String.valueOf(filteredList.size()));
         return filteredList;
     }
 
@@ -88,6 +98,8 @@ public abstract class ParkingFilter {
              list = gps(list);
          if (ouvrageFilter)
              list = ouvrage(list);
+         if(nomFilter)
+             list = nom(list);
 
          return list;
      }
