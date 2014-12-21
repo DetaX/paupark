@@ -5,6 +5,8 @@ import android.content.Context;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,7 +14,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,7 @@ import fr.univpau.paupark.listener.ParkingClickListener;
 import fr.univpau.paupark.pojo.Parking;
 import fr.univpau.paupark.presenter.CustomPagerAdapter;
 import fr.univpau.paupark.presenter.ParkingAdapter;
+import fr.univpau.paupark.presenter.ParkingFilter;
 
 public class ParkingsFragment extends Fragment {
     private ArrayList<Parking> parkings;
@@ -91,6 +96,65 @@ public class ParkingsFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         MenuItem add = menu.findItem(R.id.add);
         add.setVisible(false);
+        //SubMenu menuFilter = menu.addSubMenu(0, 5, 1, null);
+        final MenuItem filterMenu = menu.findItem(R.id.filtermenu);
+        inflater.inflate(R.menu.filter, filterMenu.getSubMenu());
+        MenuItem nom = filterMenu.getSubMenu().findItem(R.id.nom);
+        nom.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                SearchView searchFilter = new SearchView(getActivity());
+                searchFilter.setIconifiedByDefault(false);
+                getActivity().getActionBar().setCustomView(searchFilter);
+                getActivity().getActionBar().setDisplayShowCustomEnabled(true);
+                return false;
+            }
+        });
+        MenuItem prix = filterMenu.getSubMenu().findItem(R.id.places);
+        prix.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                getActivity().getActionBar().setCustomView(R.layout.places_filter);
+                getActivity().getActionBar().setDisplayShowCustomEnabled(true);
+                final EditText editMinPlace = (EditText) getActivity().findViewById(R.id.editMinPlace);
+                final EditText editMaxPlace = (EditText) getActivity().findViewById(R.id.editMaxPlace);
+                editMinPlace.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        int max = (editMaxPlace.getText().length() == 0) ? 0 : Integer.parseInt(editMaxPlace.getText().toString());
+                        int min = (editable.length() == 0) ? 0 : Integer.parseInt(editable.toString());
+                        makePages(ParkingFilter.places(parkings, min, max));
+                    }
+                });
+                editMaxPlace.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        int min = (editMinPlace.getText().length() == 0) ? 0 : Integer.parseInt(editMinPlace.getText().toString());
+                        int max = (editable.length() == 0) ? 0 : Integer.parseInt(editable.toString());
+                        makePages(ParkingFilter.places(parkings, min, max));
+                    }
+                });
+                return false;
+            }
+        });
         super.onCreateOptionsMenu(menu, inflater);
     }
     public ArrayList<Parking> getParkings() {

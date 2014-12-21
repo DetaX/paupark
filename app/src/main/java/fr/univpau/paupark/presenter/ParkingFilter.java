@@ -18,9 +18,51 @@ public abstract class ParkingFilter {
         for(Parking pk:parkings){
             Location.distanceBetween(latitude, longitude, pk.getCoord()[0], pk.getCoord()[1], results);
             Log.i("distance", String.valueOf(results[0]));
-            if(results[0] < range) {
+            if(results[0] < range)
                 filteredList.add(pk);
+        }
+        return filteredList;
+    }
+
+    public static ArrayList<Parking> free(ArrayList<Parking> parkings, boolean free) {
+        ArrayList<Parking> filteredList = new ArrayList<Parking>();
+        for(Parking pk:parkings) {
+            if (pk.isPayant() == free)
+                filteredList.add(pk);
+        }
+        return filteredList;
+    }
+
+    public static ArrayList<Parking> underground(ArrayList<Parking> parkings, boolean underground) {
+        ArrayList<Parking> filteredList = new ArrayList<Parking>();
+        for(Parking pk:parkings) {
+            if (pk.isSouterrain() == underground)
+                filteredList.add(pk);
+        }
+        return filteredList;
+    }
+
+    public static ArrayList<Parking> places(ArrayList<Parking> parkings, int min, int max) {
+
+        ArrayList<Parking> filteredList = new ArrayList<Parking>();
+        if (max != 0 && max < min)
+            return filteredList;
+
+        for(Parking pk:parkings) {
+            if (min !=0 && max !=0) {
+                if (pk.getPlaces() >= min && pk.getPlaces() <= max)
+                    filteredList.add(pk);
             }
+            else if (min != 0 && max==0) {
+                if (pk.getPlaces() >= min)
+                    filteredList.add(pk);
+            }
+            else if (min == 0 && max!=0) {
+                if (pk.getPlaces() <= max)
+                    filteredList.add(pk);
+            }
+            else
+                return parkings;
         }
         return filteredList;
     }

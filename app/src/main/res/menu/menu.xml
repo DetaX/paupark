@@ -8,4 +8,10 @@
           />
     <item android:id="@+id/settings"
           android:title="Settings" />
+    <item android:id="@+id/filtermenu"
+        android:title="Filter"
+        android:showAsAction="always"
+        >
+        <menu></menu>
+        </item>
 </menu>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Min : "
+        android:id="@+id/minPlace"
+        android:layout_centerVertical="true"
+ />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+
+        android:id="@+id/editMinPlace"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/minPlace"
+        android:layout_toEndOf="@+id/minPlace" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Max : "
+        android:id="@+id/maxPlace"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/editMinPlace"
+        android:layout_toEndOf="@+id/editMinPlace"
+        />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+
+        android:id="@+id/editMaxPlace"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/maxPlace"
+        android:layout_toEndOf="@+id/maxPlace" />
+
+</RelativeLayout>

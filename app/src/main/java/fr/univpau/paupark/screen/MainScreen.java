@@ -22,7 +22,6 @@ public class MainScreen extends Activity {
 	public static ArrayList<Parking> PARKINGS = new ArrayList<Parking>();
 	public static ArrayList<Tip> TIPS = new ArrayList<Tip>();
 	private ActionBar actionBar;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,7 +53,7 @@ public class MainScreen extends Activity {
 	    inflater.inflate(R.menu.menu, menu);
 	    return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
