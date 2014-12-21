@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/nom"
+    <item android:id="@+id/nomMenu"
         android:title="Nom"
         />
-    <item android:id="@+id/prix"
+    <item android:id="@+id/prixMenu"
         android:title="Prix"
         />
-    <item android:id="@+id/places"
+    <item android:id="@+id/placesMenu"
         android:title="Place"
         />
 </menu>

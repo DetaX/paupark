@@ -9,6 +9,16 @@ import java.util.ArrayList;
 import fr.univpau.paupark.pojo.Parking;
 
 public abstract class ParkingFilter {
+    public static boolean gpsFilter = false;
+    public static boolean priceFilter = false;
+    public static boolean ouvrageFilter = false;
+    public static boolean placesFilter = false;
+    public static int min;
+    public static int max;
+    public static double latitude;
+    public static double longitude;
+    public static boolean free;
+    public static boolean underground;
 
     public static ArrayList<Parking> gps(ArrayList<Parking> parkings, double latitude, double longitude) {
         int range = 5000;
@@ -24,7 +34,7 @@ public abstract class ParkingFilter {
         return filteredList;
     }
 
-    public static ArrayList<Parking> free(ArrayList<Parking> parkings, boolean free) {
+    public static ArrayList<Parking> free(ArrayList<Parking> parkings) {
         ArrayList<Parking> filteredList = new ArrayList<Parking>();
         for(Parking pk:parkings) {
             if (pk.isPayant() == free)
@@ -42,8 +52,8 @@ public abstract class ParkingFilter {
         return filteredList;
     }
 
-    public static ArrayList<Parking> places(ArrayList<Parking> parkings, int min, int max) {
-
+    public static ArrayList<Parking> places(ArrayList<Parking> parkings) {
+        ParkingFilter.min = min;
         ArrayList<Parking> filteredList = new ArrayList<Parking>();
         if (max != 0 && max < min)
             return filteredList;
@@ -67,4 +77,13 @@ public abstract class ParkingFilter {
         return filteredList;
     }
 
+     public static ArrayList<Parking> filter(ArrayList<Parking> parkings) {
+         ArrayList<Parking> list = parkings;
+         if (priceFilter)
+             list = free(list);
+         if (placesFilter)
+             list = places(list);
+
+         return list;
+     }
 }

@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SearchView;
 
 import java.util.ArrayList;
@@ -33,14 +35,16 @@ import fr.univpau.paupark.presenter.ParkingFilter;
 
 public class ParkingsFragment extends Fragment {
     private ArrayList<Parking> parkings;
+    private ArrayList<Parking> filteredList;
     public static boolean firstTime;
     private ViewGroup container;
     private LocationManager locationManager;
     private CustomLocationListener locationListener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.container=container;
+        this.container = container;
         return inflater.inflate(R.layout.parkings_fragment, container, false);
     }
 
@@ -48,7 +52,7 @@ public class ParkingsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        firstTime=true;
+        firstTime = true;
     }
 
     @Override
@@ -59,13 +63,12 @@ public class ParkingsFragment extends Fragment {
             refresh();
         else makePages(parkings);
         if (locationManager == null)
-            locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         if (Settings.PREFERENCE.getBoolean(Settings.GEOLOCATION_SETTING_KEY, false)) {
             locationListener = new CustomLocationListener(this);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-        }
-        else if (locationListener != null)
+        } else if (locationListener != null)
             locationManager.removeUpdates(locationListener);
 
     }
@@ -77,7 +80,7 @@ public class ParkingsFragment extends Fragment {
             Log.i("size", String.valueOf(parkings.size()));
             for (int i = 0; i <= (parkings.size() / size); i++) {
                 List<Parking> sublist = parkings.subList(i * size, Math.min(parkings.size(), size + i * size));
-                if (sublist.size() > 0 ) {
+                if (sublist.size() > 0) {
                     ListView listview = new ListView(getActivity());
                     ParkingAdapter adapter = new ParkingAdapter(getActivity(), fr.univpau.paupark.R.layout.parking_item, sublist);
                     pages.add(listview);
@@ -88,6 +91,7 @@ public class ParkingsFragment extends Fragment {
             ViewPager vp = (ViewPager) getActivity().findViewById(R.id.pager);
             CustomPagerAdapter pager_adapter = new CustomPagerAdapter(pages);
             vp.setAdapter(pager_adapter);
+            filteredList = parkings;
         }
     }
 
@@ -99,7 +103,7 @@ public class ParkingsFragment extends Fragment {
         //SubMenu menuFilter = menu.addSubMenu(0, 5, 1, null);
         final MenuItem filterMenu = menu.findItem(R.id.filtermenu);
         inflater.inflate(R.menu.filter, filterMenu.getSubMenu());
-        MenuItem nom = filterMenu.getSubMenu().findItem(R.id.nom);
+        MenuItem nom = filterMenu.getSubMenu().findItem(R.id.nomMenu);
         nom.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -110,14 +114,53 @@ public class ParkingsFragment extends Fragment {
                 return false;
             }
         });
-        MenuItem prix = filterMenu.getSubMenu().findItem(R.id.places);
+        MenuItem prix = filterMenu.getSubMenu().findItem(R.id.prixMenu);
         prix.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                getActivity().getActionBar().setCustomView(R.layout.price_filter);
+                getActivity().getActionBar().setDisplayShowCustomEnabled(true);
+                RadioGroup radiogroup = (RadioGroup) getActivity().findViewById(R.id.prix);
+                if (ParkingFilter.priceFilter) {
+                    RadioButton radio;
+                    if (ParkingFilter.free) {
+                        radio = (RadioButton) getActivity().findViewById(R.id.free);
+
+                    } else {
+                        radio = (RadioButton) getActivity().findViewById(R.id.paying);
+
+                    }
+                    radio.setChecked(true);
+                }
+                radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                        ParkingFilter.priceFilter = true;
+                        if (i == R.id.paying) {
+                            ParkingFilter.free = false;
+                            makePages(ParkingFilter.filter(parkings));
+                        } else if (i == R.id.free) {
+                            ParkingFilter.free = true;
+                            makePages(ParkingFilter.filter(parkings));
+                        } else {
+                            ParkingFilter.priceFilter = false;
+                            makePages(ParkingFilter.filter(parkings));
+                        }
+                    }
+                });
+                return false;
+            }
+        });
+        MenuItem places = filterMenu.getSubMenu().findItem(R.id.placesMenu);
+        places.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 getActivity().getActionBar().setCustomView(R.layout.places_filter);
                 getActivity().getActionBar().setDisplayShowCustomEnabled(true);
                 final EditText editMinPlace = (EditText) getActivity().findViewById(R.id.editMinPlace);
                 final EditText editMaxPlace = (EditText) getActivity().findViewById(R.id.editMaxPlace);
+                editMinPlace.setText(String.valueOf(ParkingFilter.min));
+                editMaxPlace.setText(String.valueOf(ParkingFilter.max));
                 editMinPlace.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
@@ -132,7 +175,14 @@ public class ParkingsFragment extends Fragment {
                     public void afterTextChanged(Editable editable) {
                         int max = (editMaxPlace.getText().length() == 0) ? 0 : Integer.parseInt(editMaxPlace.getText().toString());
                         int min = (editable.length() == 0) ? 0 : Integer.parseInt(editable.toString());
-                        makePages(ParkingFilter.places(parkings, min, max));
+                        if (min == 0 && max == 0)
+                            ParkingFilter.placesFilter = false;
+                        else
+                            ParkingFilter.placesFilter = true;
+                        ParkingFilter.min = min;
+                        ParkingFilter.max = max;
+
+                        makePages(ParkingFilter.filter(parkings));
                     }
                 });
                 editMaxPlace.addTextChangedListener(new TextWatcher() {
@@ -149,7 +199,13 @@ public class ParkingsFragment extends Fragment {
                     public void afterTextChanged(Editable editable) {
                         int min = (editMinPlace.getText().length() == 0) ? 0 : Integer.parseInt(editMinPlace.getText().toString());
                         int max = (editable.length() == 0) ? 0 : Integer.parseInt(editable.toString());
-                        makePages(ParkingFilter.places(parkings, min, max));
+                        if (min == 0 && max == 0)
+                            ParkingFilter.placesFilter = false;
+                        else
+                            ParkingFilter.placesFilter = true;
+                        ParkingFilter.min = min;
+                        ParkingFilter.max = max;
+                        makePages(ParkingFilter.filter(parkings));
                     }
                 });
                 return false;
@@ -157,12 +213,14 @@ public class ParkingsFragment extends Fragment {
         });
         super.onCreateOptionsMenu(menu, inflater);
     }
+
     public ArrayList<Parking> getParkings() {
         return parkings;
     }
+
     public void refresh() {
         parkings.clear();
-        ParkingsTask parkingtask=new ParkingsTask(container.getContext(), parkings,this);
+        ParkingsTask parkingtask = new ParkingsTask(container.getContext(), parkings, this);
         parkingtask.execute();
     }
 }
