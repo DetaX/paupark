@@ -20,7 +20,7 @@ public abstract class ParkingFilter {
     public static boolean free;
     public static boolean underground;
 
-    public static ArrayList<Parking> gps(ArrayList<Parking> parkings, double latitude, double longitude) {
+    public static ArrayList<Parking> gps(ArrayList<Parking> parkings) {
         int range = 5000;
         float results[] = new float[1];
         Log.i("longitude", String.valueOf(longitude));Log.i("latitude", String.valueOf(latitude));
@@ -34,21 +34,22 @@ public abstract class ParkingFilter {
         return filteredList;
     }
 
-    public static ArrayList<Parking> free(ArrayList<Parking> parkings) {
+    public static ArrayList<Parking> price(ArrayList<Parking> parkings) {
         ArrayList<Parking> filteredList = new ArrayList<Parking>();
         for(Parking pk:parkings) {
-            if (pk.isPayant() == free)
+            if (pk.isPayant() != free)
                 filteredList.add(pk);
         }
         return filteredList;
     }
 
-    public static ArrayList<Parking> underground(ArrayList<Parking> parkings, boolean underground) {
+    public static ArrayList<Parking> ouvrage(ArrayList<Parking> parkings) {
         ArrayList<Parking> filteredList = new ArrayList<Parking>();
         for(Parking pk:parkings) {
             if (pk.isSouterrain() == underground)
                 filteredList.add(pk);
         }
+        Log.i("taille", String.valueOf(filteredList.size()));
         return filteredList;
     }
 
@@ -80,9 +81,13 @@ public abstract class ParkingFilter {
      public static ArrayList<Parking> filter(ArrayList<Parking> parkings) {
          ArrayList<Parking> list = parkings;
          if (priceFilter)
-             list = free(list);
+             list = price(list);
          if (placesFilter)
              list = places(list);
+         if (gpsFilter)
+             list = gps(list);
+         if (ouvrageFilter)
+             list = ouvrage(list);
 
          return list;
      }

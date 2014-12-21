@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <RadioGroup
-        android:id="@+id/prix"
+        android:id="@+id/ouvrage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -12,23 +12,23 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/paying"
-            android:textSize="6pt"
-            android:text="Payant" />
+            android:id="@+id/underground"
+            android:textSize="5pt"
+            android:text="Souterrain" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/allPrice"
+            android:id="@+id/allOuvrage"
             android:checked="true"
-            android:textSize="6pt"
+            android:textSize="5pt"
             android:text="Tous" />
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/free"
-            android:textSize="6pt"
-            android:text="Gratuit" />
+            android:id="@+id/outdoor"
+            android:textSize="5pt"
+            android:text="Plein Air" />
 
     </RadioGroup>
 </RelativeLayout>

@@ -6,6 +6,9 @@
     <item android:id="@+id/prixMenu"
         android:title="Prix"
         />
+    <item android:id="@+id/ouvrageMenu"
+        android:title="Ouvrage"
+        />
     <item android:id="@+id/placesMenu"
         android:title="Place"
         />

@@ -93,6 +93,11 @@ public class ParkingsFragment extends Fragment {
             vp.setAdapter(pager_adapter);
             filteredList = parkings;
         }
+        else {
+            ViewPager vp = (ViewPager) getActivity().findViewById(R.id.pager);
+            CustomPagerAdapter pager_adapter = new CustomPagerAdapter(new Vector<View>());
+            vp.setAdapter(pager_adapter);
+        }
     }
 
 
@@ -123,13 +128,10 @@ public class ParkingsFragment extends Fragment {
                 RadioGroup radiogroup = (RadioGroup) getActivity().findViewById(R.id.prix);
                 if (ParkingFilter.priceFilter) {
                     RadioButton radio;
-                    if (ParkingFilter.free) {
+                    if (ParkingFilter.free)
                         radio = (RadioButton) getActivity().findViewById(R.id.free);
-
-                    } else {
+                     else
                         radio = (RadioButton) getActivity().findViewById(R.id.paying);
-
-                    }
                     radio.setChecked(true);
                 }
                 radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -151,6 +153,41 @@ public class ParkingsFragment extends Fragment {
                 return false;
             }
         });
+        MenuItem ouvrage = filterMenu.getSubMenu().findItem(R.id.ouvrageMenu);
+        ouvrage.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                getActivity().getActionBar().setCustomView(R.layout.ouvrage_filter);
+                getActivity().getActionBar().setDisplayShowCustomEnabled(true);
+                RadioGroup radiogroup = (RadioGroup) getActivity().findViewById(R.id.ouvrage);
+                if (ParkingFilter.ouvrageFilter) {
+                    RadioButton radio;
+                    if (ParkingFilter.underground)
+                        radio = (RadioButton) getActivity().findViewById(R.id.underground);
+                    else
+                        radio = (RadioButton) getActivity().findViewById(R.id.outdoor);
+                    radio.setChecked(true);
+                }
+                radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                        ParkingFilter.ouvrageFilter = true;
+                        if (i == R.id.underground) {
+                            ParkingFilter.underground = true;
+                            makePages(ParkingFilter.filter(parkings));
+                        } else if (i == R.id.outdoor) {
+                            ParkingFilter.underground = false;
+                            makePages(ParkingFilter.filter(parkings));
+                        } else {
+                            ParkingFilter.ouvrageFilter = false;
+                            makePages(ParkingFilter.filter(parkings));
+                        }
+                    }
+                });
+                return false;
+            }
+        });
+
         MenuItem places = filterMenu.getSubMenu().findItem(R.id.placesMenu);
         places.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override

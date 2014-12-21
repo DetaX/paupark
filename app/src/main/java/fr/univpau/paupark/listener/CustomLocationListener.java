@@ -30,12 +30,17 @@ public class CustomLocationListener implements LocationListener {
         SharedPreferences.Editor prefEditor = Settings.PREFERENCE.edit();
         prefEditor.putBoolean(Settings.GEOLOCATION_SETTING_KEY, false);
         prefEditor.commit();
+        ParkingFilter.gpsFilter = false;
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        if (Settings.PREFERENCE.getBoolean(Settings.GEOLOCATION_SETTING_KEY, false))
-            fragment.makePages(ParkingFilter.gps(fragment.getParkings(), location.getLatitude(), location.getLongitude()));
+        if (Settings.PREFERENCE.getBoolean(Settings.GEOLOCATION_SETTING_KEY, false)) {
+            ParkingFilter.gpsFilter = true;
+            ParkingFilter.latitude = location.getLatitude();
+            ParkingFilter.longitude = location.getLongitude();
+            fragment.makePages(ParkingFilter.filter(fragment.getParkings()));
+        }
     }
 
 
