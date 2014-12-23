@@ -3,7 +3,6 @@ package fr.univpau.paupark.screen;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,7 +58,6 @@ public class TipsFragment extends Fragment {
         if (tips.size() > 0) {
             int size = (Settings.PREFERENCE.getBoolean(Settings.PAGINATION_SETTING_KEY, false)) ? Settings.PAGINATION_MAX_PARKINGS : tips.size();
             Vector<View> pages = new Vector<>();
-            Log.i("size", String.valueOf(tips.size()));
             for (int i = 0; i <= (tips.size() / size); i++) {
                 List<Tip> sublist = tips.subList(i * size, Math.min(tips.size(), size + i * size));
                 if (sublist.size() > 0) {

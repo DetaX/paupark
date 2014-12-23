@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import fr.univpau.paupark.R;
 import fr.univpau.paupark.listener.NoDataDialogListener;
 import fr.univpau.paupark.pojo.Parking;
 import fr.univpau.paupark.screen.ParkingsFragment;
@@ -35,7 +36,7 @@ public class ParkingsTask extends AsyncTask<Void, Void, ArrayList<Parking>> {
 	@Override	
 	 protected void onPreExecute() {
 		progress = new ProgressDialog(fragment.getActivity());
-        progress.setMessage("Téléchargement des données");
+        progress.setMessage(fragment.getString(R.string.asynctask_download));
         progress.setCancelable(false);
         progress.show();
      }
@@ -103,10 +104,10 @@ public class ParkingsTask extends AsyncTask<Void, Void, ArrayList<Parking>> {
 		else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(fragment.getActivity());
 				alertDialogBuilder
-					.setMessage("Impossible de télécharger la liste de parkings. \r\nCliquez sur options pour vérifier votre connexion à Internet\r\nCliquez sur OK pour chager la liste de votre dernière connexion")
+					.setMessage(fragment.getString(R.string.parkingtask_nodata))
 					.setCancelable(false)
-					.setNeutralButton("Options", new NoDataDialogListener(fragment.getActivity(), db, fragment))
-					.setPositiveButton("Ok", new NoDataDialogListener(fragment.getActivity(), db, fragment));
+					.setNeutralButton(fragment.getString(R.string.dialog_options), new NoDataDialogListener(fragment.getActivity(), db, fragment))
+					.setPositiveButton(fragment.getString(R.string.dialog_ok), new NoDataDialogListener(fragment.getActivity(), db, fragment));
 
 					AlertDialog alertDialog = alertDialogBuilder.create();
 	 

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import fr.univpau.paupark.R;
 import fr.univpau.paupark.listener.NoDataDialogListener;
 import fr.univpau.paupark.pojo.Tip;
 import fr.univpau.paupark.screen.TipsFragment;
@@ -35,7 +36,7 @@ public class TipsTask extends AsyncTask<Void, Void, ArrayList<Tip>> {
 	@Override	
 	 protected void onPreExecute() {
 		progress = new ProgressDialog(fragment.getActivity());
-        progress.setMessage("Téléchargement des données");
+        progress.setMessage(fragment.getString(R.string.asynctask_download));
         progress.setCancelable(false);
         progress.show();
          
@@ -104,10 +105,10 @@ public class TipsTask extends AsyncTask<Void, Void, ArrayList<Tip>> {
 		else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(fragment.getActivity());
 				alertDialogBuilder
-					.setMessage("Impossible de télécharger la liste de tips. \r\nCliquez sur options pour vérifier votre connexion à Internet\n\nCliquez sur OK pour chager la liste de votre dernière connexion")
+					.setMessage(fragment.getString(R.string.tipstask_nodata))
 					.setCancelable(false)
-					.setNeutralButton("Options", new NoDataDialogListener(fragment.getActivity(),db,fragment))
-					.setPositiveButton("Ok", new NoDataDialogListener(fragment.getActivity(), db, fragment));
+					.setNeutralButton(fragment.getString(R.string.dialog_options), new NoDataDialogListener(fragment.getActivity(),db,fragment))
+					.setPositiveButton(fragment.getString(R.string.dialog_ok), new NoDataDialogListener(fragment.getActivity(), db, fragment));
 
 					AlertDialog alertDialog = alertDialogBuilder.create();
 					alertDialog.show();

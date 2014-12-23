@@ -3,7 +3,7 @@ package fr.univpau.paupark.screen;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
 import fr.univpau.paupark.R;
 
 public class SplashScreen extends Activity {
@@ -19,11 +19,9 @@ public class SplashScreen extends Activity {
 					sleep(30);
 					Intent i = new Intent(getBaseContext(), MainScreen.class);
 					startActivity(i);
-					
 					finish();
 				}
 				catch(Exception e){
-					Log.e("ZEX", e.getMessage());
 				}
 			}
 		};

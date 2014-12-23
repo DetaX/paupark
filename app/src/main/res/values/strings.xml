@@ -23,7 +23,7 @@
     <string name="filter_places_max">Max :</string>
     <string name="settings_geo">Utiliser la géolocalisation</string>
     <string name="settings_geo_summary">Permet de filtrer les parkings par rapport à votre position. Nécessite d\'activer votre GPS.</string>
-    <string name="settings_distance">Distance maximum</string>
+    <string name="settings_distance">Distance maximum : </string>
     <string name="settings_pagination">Activer la pagination</string>
     <string name="settings_pseudo">Pseudonyme utilisateur</string>
     <string name="settings_pseudo_summary">Défini le pseudonyme utilisé pour ajouter les bons plans.</string>
@@ -38,5 +38,31 @@
     <string name="add_tip_places">Places</string>
     <string name="add_tip_comment">Commentaire</string>
     <string name="splash_screen_image">Splash Screen Image</string>
+    <string name="asynctask_download">Téléchargement des données</string>
+    <string name="parkingtask_nodata">Impossible de télécharger la liste de parkings.\r\nCliquez sur options pour vérifier votre connexion à Internet\r\nCliquez sur OK pour chager la liste de votre dernière connexion</string>
+    <string name="dialog_options">Options</string>
+    <string name="dialog_ok">Ok</string>
+    <string name="tipstask_nodata">Impossible de télécharger la liste de bons plans.\r\nCliquez sur options pour vérifier votre connexion à Internet\r\nCliquez sur OK pour chager la liste de votre dernière connexion</string>
+    <string name="new_note">"Nouvelle fiabilité : "</string>
+    <string name="error">Il y a eu une erreur</string>
+    <string name="new_tip">Bon plan ajouté !</string>
+    <string name="note_title">"Noter : "</string>
+    <string name="back_dialog">Retour</string>
+    <string name="note_dialog_ok">Noter</string>
+    <string name="add_tip_field_empty">Veuillez remplir les champs correctement</string>
+    <string name="nodata_parking_loaded">La liste de parkings de votre dernière connexion a été chargé</string>
+    <string name="nodata_tips_loaded">La liste de bons plans de votre dernière connexion a été chargé</string>
+    <string name="nogps">VOUS DEVEZ AVOIR UN GPS POUR UTILISER CETTE FONCTIONNALITE. Permet de filtrer les parkings par rapport à votre position. Nécessite d\'activer votre GPS.</string>
+    <string name="detail_tip_titre">Titre</string>
+    <string name="detail_tip_adresse">Adresse</string>
+    <string name="detail_tip_commune">Commune</string>
+    <string name="detail_tip_places">Places</string>
+    <string name="detail_tip_comment">Commentaire</string>
+    <string name="detail_tip_added_by">Ajouté par</string>
+    <string name="detail_tip_no_note">Pas de note</string>
+    <string name="detail_tip_average">Note moyenne</string>
+    <string name="detail_tip_gmap">Voir sur GMAPs</string>
+    <string name="gps_non_active">Le GPS est désactivé sur votre appareil. Voulez-vous l\'activer ?</string>
+    <string name="activate_gps">Activer le GPS dans les options</string>
 
 </resources>

@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import fr.univpau.paupark.R;
 import fr.univpau.paupark.pojo.Tip;
 
 public class TipAddTask extends AsyncTask<Void, Void, String> {
@@ -79,7 +80,7 @@ public class TipAddTask extends AsyncTask<Void, Void, String> {
 		Toast toast;
 		try {
 			int id =Integer.parseInt(result.substring(0, result.length() - 1));
-			toast = Toast.makeText(context, "Bon plan ajouté !", Toast.LENGTH_SHORT);
+			toast = Toast.makeText(context, context.getString(R.string.new_tip), Toast.LENGTH_SHORT);
 			tip.setId(id);
 			tips.add(tip);
 			((Activity)context).finish();

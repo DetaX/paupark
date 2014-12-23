@@ -17,18 +17,18 @@ public class SettingsFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
-        range = findPreference("range");
-        gps = findPreference("gps");
+        range = findPreference(Settings.GEOLOCATION_RANGE_SETTING_KEY);
+        gps = findPreference(Settings.GEOLOCATION_SETTING_KEY);
 
-        int rangeValue = Settings.PREFERENCE.getInt("range", 0) + 100;
-        setTitle("Distance maximum : " + rangeValue);
+        int rangeValue = Settings.PREFERENCE.getInt(Settings.GEOLOCATION_RANGE_SETTING_KEY, 0) + 100;
+        setTitle(getString(R.string.settings_distance) + rangeValue);
 
-        setSeekBarEnabled(Settings.PREFERENCE.getBoolean("gps", false));
+        setSeekBarEnabled(Settings.PREFERENCE.getBoolean(Settings.GEOLOCATION_SETTING_KEY, false));
         PackageManager packageManager = this.getActivity().getPackageManager();
         boolean hasGPS = packageManager.hasSystemFeature(PackageManager.FEATURE_LOCATION_GPS);
         if (!hasGPS) {
             gps.setEnabled(false);
-            gps.setSummary("VOUS DEVEZ AVOIR UN GPS POUR UTILISER CETTE FONCTIONNALITE. Permet de filtrer les parkings par rapport à votre position. Nécessite d'activer votre GPS.");
+            gps.setSummary(getString(R.string.nogps));
         }
     }
 

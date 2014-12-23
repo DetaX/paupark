@@ -28,20 +28,20 @@ public class Util {
 		final View detailsView = inflater.inflate(R.layout.tip_details, null);
 		
 		TextView titre = (TextView)detailsView.findViewById(R.id.tip_details_titre);
-		underlineText(titre, "Titre", " : " + tip.getTitre());
+		underlineText(titre, context.getString(R.string.detail_tip_titre), " : " + tip.getTitre());
 		TextView adresse = (TextView)detailsView.findViewById(R.id.tip_details_adresse);
-		underlineText(adresse, "Adresse", " : " + tip.getAdresse());
+		underlineText(adresse, context.getString(R.string.detail_tip_adresse), " : " + tip.getAdresse());
 		TextView commune = (TextView)detailsView.findViewById(R.id.tip_details_commune);
-		underlineText(commune, "Commune", " : " + tip.getCommune());
+		underlineText(commune, context.getString(R.string.detail_tip_commune), " : " + tip.getCommune());
 		TextView places = (TextView)detailsView.findViewById(R.id.tip_details_places);
-		underlineText(places, "Places", " : " + tip.getCapacite());
+		underlineText(places, context.getString(R.string.detail_tip_places), " : " + tip.getCapacite());
 		TextView commentaire = (TextView)detailsView.findViewById(R.id.tip_details_commentaire);
-		underlineText(commentaire, "Commentaire", " : " + tip.getCommentaire());
+		underlineText(commentaire, context.getString(R.string.detail_tip_comment), " : " + tip.getCommentaire());
 		TextView pseudo = (TextView)detailsView.findViewById(R.id.tip_details_pseudo);
-		underlineText(pseudo, "Ajouté par", " : " + tip.getPseudo());
+		underlineText(pseudo, context.getString(R.string.detail_tip_added_by), " : " + tip.getPseudo());
 		TextView fiabilite = (TextView)detailsView.findViewById(R.id.tip_details_fiabilite);
-		String strFiabilite = (tip.getFiabilite() == -1) ? "Pas de note" : tip.getFiabilite() + "/5";
-		underlineText(fiabilite, "Note moyenne", " : " + strFiabilite);
+		String strFiabilite = (tip.getFiabilite() == -1) ? context.getString(R.string.detail_tip_no_note) : tip.getFiabilite() + "/5";
+		underlineText(fiabilite, context.getString(R.string.detail_tip_average), " : " + strFiabilite);
 		
 		
 
@@ -49,9 +49,9 @@ public class Util {
 		
 		alertDialogBuilder
 			.setCancelable(true)
-			.setNegativeButton("Retour", new TipDialogListener(context, tip, tips))
-			.setNeutralButton("Noter", new TipDialogListener(context, tip, tips))
-			.setPositiveButton("Voir sur GMAPs",new TipDialogListener(context, tip, tips));
+			.setNegativeButton(context.getString(R.string.back_dialog), new TipDialogListener(context, tip, tips))
+			.setNeutralButton(context.getString(R.string.note_dialog_ok), new TipDialogListener(context, tip, tips))
+			.setPositiveButton(context.getString(R.string.detail_tip_gmap),new TipDialogListener(context, tip, tips));
 		
 			AlertDialog alertDialog = alertDialogBuilder.create();
 
@@ -71,10 +71,10 @@ public class Util {
 	
 	public static void showGPSDisabledAlertToUser(Activity context, CheckBoxPreference gps){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-        alertDialogBuilder.setMessage("Le GPS est désactivé sur votre appareil. Voulez-vous l'activer ?")
+        alertDialogBuilder.setMessage(context.getString(R.string.gps_non_active))
         .setCancelable(false)
-        .setPositiveButton("Activer le GPS dans les options", new ActivateGPSListener(context));
-        alertDialogBuilder.setNegativeButton("Retour", new ActivateGPSListener(context));
+        .setPositiveButton(context.getString(R.string.activate_gps), new ActivateGPSListener(context));
+        alertDialogBuilder.setNegativeButton(context.getString(R.string.back_dialog), new ActivateGPSListener(context));
         AlertDialog alert = alertDialogBuilder.create();
         alert.setOnDismissListener(new ActivateGPSDismissListener(gps));
         alert.show();

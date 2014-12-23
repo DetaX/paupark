@@ -17,7 +17,7 @@ public class TipAddListener implements OnClickListener {
 	
 	private final Context context;
 	private final ArrayList<Tip> tips;
-		
+    private final static String ANONYMOUS_NICK = "Anonymous";
 	public TipAddListener(Context context, ArrayList<Tip> tips){
 		this.context = context;
 		this.tips = tips;
@@ -40,8 +40,8 @@ public class TipAddListener implements OnClickListener {
 
 		if(!nom.equals("") && !adresse.equals("") && !commune.equals("") && !places.equals("") && !commentaire.equals("")){
 
-		String pseudo = Settings.PREFERENCE.getString(Settings.PSEUDO_SETTING_KEY, "Anonymous");
-		pseudo = (!pseudo.equals("")) ? pseudo : "Anonymous";
+		String pseudo = Settings.PREFERENCE.getString(Settings.PSEUDO_SETTING_KEY, ANONYMOUS_NICK);
+		pseudo = (!pseudo.equals("")) ? pseudo : ANONYMOUS_NICK;
 			Tip tip = new Tip(nom, adresse, commune, Integer.parseInt(places), commentaire,	pseudo, -1.d, 0);
 			TipAddTask tipAddTask = new TipAddTask(context, tips, tip);
 			tipAddTask.execute();
@@ -49,7 +49,7 @@ public class TipAddListener implements OnClickListener {
 		}
 		
 		else{
-			Toast toast = Toast.makeText(context, "Veuillez remplir les champs correctement", Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(context, context.getString(R.string.add_tip_field_empty), Toast.LENGTH_SHORT);
 			toast.show();
 		}
 	}

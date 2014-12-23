@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import fr.univpau.paupark.R;
 import fr.univpau.paupark.pojo.Parking;
 import fr.univpau.paupark.pojo.Tip;
 import fr.univpau.paupark.screen.MainScreen;
@@ -35,7 +36,7 @@ public class NoDataDialogListener implements DialogInterface.OnClickListener {
                 MainScreen.PARKINGS = parkings;
                 ParkingsFragment.firstTime = false;
                 ((ParkingsFragment)fragment).makePages(parkings);
-                Toast toast = Toast.makeText(context, "La liste de parkings de votre dernière connexion a été chargé", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(context, context.getString(R.string.nodata_parking_loaded), Toast.LENGTH_LONG);
                 toast.show();
             }
             else {
@@ -43,7 +44,7 @@ public class NoDataDialogListener implements DialogInterface.OnClickListener {
                 MainScreen.TIPS = tips;
                 TipsFragment.firstTime = false;
                 ((TipsFragment)fragment).makePages(tips);
-                Toast toast = Toast.makeText(context, "La liste de bons plans de votre dernière connexion a été chargé", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(context, context.getString(R.string.nodata_tips_loaded), Toast.LENGTH_LONG);
                 toast.show();
             }
         }

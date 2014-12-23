@@ -38,11 +38,11 @@ public class TipDialogListener implements OnClickListener {
 			
 			RatingBar ratingBar = (RatingBar) modifyView.findViewById(R.id.ratingBar1);
 
-			alertDialogBuilder.setTitle("Noter : " + tip.getTitre());
+			alertDialogBuilder.setTitle(context.getString(R.string.note_title) + tip.getTitre());
 			alertDialogBuilder
 				.setCancelable(true)
-				.setNegativeButton("Retour", new RatingListener(context, tip, ratingBar,tips))
-				.setNeutralButton("Noter", new RatingListener(context, tip, ratingBar,tips));
+				.setNegativeButton(context.getString(R.string.back_dialog), new RatingListener(context, tip, ratingBar,tips))
+				.setNeutralButton(context.getString(R.string.note_dialog_ok), new RatingListener(context, tip, ratingBar, tips));
 
 				AlertDialog alertDialog = alertDialogBuilder.create();
 

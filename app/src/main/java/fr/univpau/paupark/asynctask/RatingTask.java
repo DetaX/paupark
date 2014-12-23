@@ -2,7 +2,6 @@ package fr.univpau.paupark.asynctask;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -15,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import fr.univpau.paupark.R;
 import fr.univpau.paupark.pojo.Tip;
 import fr.univpau.paupark.util.Util;
 
@@ -72,22 +72,25 @@ public class RatingTask extends AsyncTask<Void, Void, String> {
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
 		Toast toast;
-		if (result.equals("Erreur.")) 
-			toast = Toast.makeText(context, "Il y a eu une erreur", Toast.LENGTH_SHORT);
-		else {
-			String strToast = "Nouvelle fiabilité : " + result;
-			toast = Toast.makeText(context, strToast, Toast.LENGTH_SHORT);
-			for (int i=0;i<tips.size();i++) 
-				if (tips.get(i).getId() == id) {
-					Tip tip = tips.get(i);
-					tip.setFiabilite(Float.valueOf(result));
-					Util.dialog_detail_tip(context, tip, tips);
-					Log.i("prout", tip.getTitre());
-					break;
-				}
-		}
-		toast.show();
-		
+        String strToast="";
+        try {
+           float fiabilite = Float.valueOf(result);
+           strToast = context.getString(R.string.new_note) + result;
+            for (int i=0;i<tips.size();i++)
+                if (tips.get(i).getId() == id) {
+                    Tip tip = tips.get(i);
+                    tip.setFiabilite(fiabilite);
+                    Util.dialog_detail_tip(context, tip, tips);
+                    break;
+                }
+        }
+        catch(NumberFormatException e) {
+            strToast = context.getString(R.string.error);
+        }
+        finally {
+            toast = Toast.makeText(context, strToast, Toast.LENGTH_SHORT);
+            toast.show();
+        }
 		
 	}
 }
