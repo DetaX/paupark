@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,14 +35,12 @@ import fr.univpau.paupark.presenter.ParkingFilter;
 public class ParkingsFragment extends Fragment {
     private ArrayList<Parking> parkings;
     public static boolean firstTime;
-    private ViewGroup container;
     private LocationManager locationManager;
     private CustomLocationListener locationListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.container = container;
         return inflater.inflate(R.layout.parkings_fragment, container, false);
     }
 
@@ -69,20 +66,18 @@ public class ParkingsFragment extends Fragment {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
         } else if (locationListener != null)
             locationManager.removeUpdates(locationListener);
-
     }
 
     public void makePages(ArrayList<Parking> parkings) {
         if (parkings.size() > 0) {
             parkings = ParkingFilter.filter(parkings);
             int size = (Settings.PREFERENCE.getBoolean(Settings.PAGINATION_SETTING_KEY, false)) ? Settings.PAGINATION_MAX_PARKINGS : parkings.size();
-            Vector<View> pages = new Vector<View>();
-            Log.i("size", String.valueOf(parkings.size()));
+            Vector<View> pages = new Vector<>();
             for (int i = 0; i <= (parkings.size() / size); i++) {
                 List<Parking> sublist = parkings.subList(i * size, Math.min(parkings.size(), size + i * size));
                 if (sublist.size() > 0) {
                     ListView listview = new ListView(getActivity());
-                    ParkingAdapter adapter = new ParkingAdapter(getActivity(), fr.univpau.paupark.R.layout.parking_item, sublist);
+                    ParkingAdapter adapter = new ParkingAdapter(getActivity(), sublist);
                     pages.add(listview);
                     listview.setAdapter(adapter);
                     listview.setOnItemClickListener(new ParkingClickListener(sublist));
@@ -226,11 +221,7 @@ public class ParkingsFragment extends Fragment {
                     public void afterTextChanged(Editable editable) {
                         int max = (editMaxPlace.getText().length() == 0) ? 0 : Integer.parseInt(editMaxPlace.getText().toString());
                         int min = (editable.length() == 0) ? 0 : Integer.parseInt(editable.toString());
-                        if (min == 0 && max == 0)
-                            ParkingFilter.placesFilter = false;
-                        else
-                            ParkingFilter.placesFilter = true;
-
+                        ParkingFilter.placesFilter = (min != 0 || max != 0);
                         ParkingFilter.min = min;
                         ParkingFilter.max = max;
                         makePages(parkings);
@@ -250,10 +241,7 @@ public class ParkingsFragment extends Fragment {
                     public void afterTextChanged(Editable editable) {
                         int min = (editMinPlace.getText().length() == 0) ? 0 : Integer.parseInt(editMinPlace.getText().toString());
                         int max = (editable.length() == 0) ? 0 : Integer.parseInt(editable.toString());
-                        if (min == 0 && max == 0)
-                            ParkingFilter.placesFilter = false;
-                        else
-                            ParkingFilter.placesFilter = true;
+                        ParkingFilter.placesFilter = (min != 0 || max != 0);
                         ParkingFilter.min = min;
                         ParkingFilter.max = max;
                         makePages(parkings);

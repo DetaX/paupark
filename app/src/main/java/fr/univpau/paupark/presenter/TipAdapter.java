@@ -1,7 +1,5 @@
 package fr.univpau.paupark.presenter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,20 +7,23 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.List;
+
 import fr.univpau.paupark.pojo.Tip;
 
 public class TipAdapter extends ArrayAdapter<Tip> {
 
 	private final Context context;
-	private List<Tip> tips;
+	private final List<Tip> tips;
 	
 	@Override
 	public int getCount() {
 		return tips.size();		
 	}
 
-	public TipAdapter(Context context, int resource, List<Tip> tips) {
-		super(context, resource);
+	public TipAdapter(Context context, List<Tip> tips) {
+		super(context, fr.univpau.paupark.R.layout.tip_item);
 		this.context = context;
 		this.tips = tips;
 	}

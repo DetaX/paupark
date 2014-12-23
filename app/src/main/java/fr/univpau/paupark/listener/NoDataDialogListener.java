@@ -16,9 +16,9 @@ import fr.univpau.paupark.screen.TipsFragment;
 import fr.univpau.paupark.util.DBHandler;
 
 public class NoDataDialogListener implements DialogInterface.OnClickListener {
-	private Context context;
-	private DBHandler db;
-    private Fragment fragment;
+	private final Context context;
+	private final DBHandler db;
+    private final Fragment fragment;
 
 	public NoDataDialogListener(Context context, DBHandler db, Fragment fragment) {
 		this.context=context;
@@ -30,7 +30,7 @@ public class NoDataDialogListener implements DialogInterface.OnClickListener {
 	public void onClick(DialogInterface dialog, int which) {
 		if (which == DialogInterface.BUTTON_POSITIVE) {
             dialog.cancel();
-            if (fragment.getTag() == "Parkings") {
+            if (fragment.getTag().equals(MainScreen.PARKING_TAG)) {
                 ArrayList<Parking> parkings = db.getAllParkings();
                 MainScreen.PARKINGS = parkings;
                 ParkingsFragment.firstTime = false;

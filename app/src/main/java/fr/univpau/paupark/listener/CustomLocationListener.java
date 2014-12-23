@@ -11,7 +11,7 @@ import fr.univpau.paupark.screen.Settings;
 
 public class CustomLocationListener implements LocationListener {
 
-    private ParkingsFragment fragment;
+    private final ParkingsFragment fragment;
 
     public CustomLocationListener(ParkingsFragment fragment) {
         this.fragment = fragment;
@@ -29,7 +29,7 @@ public class CustomLocationListener implements LocationListener {
     public void onProviderDisabled(String s) {
         SharedPreferences.Editor prefEditor = Settings.PREFERENCE.edit();
         prefEditor.putBoolean(Settings.GEOLOCATION_SETTING_KEY, false);
-        prefEditor.commit();
+        prefEditor.apply();
         ParkingFilter.gpsFilter = false;
     }
 

@@ -1,12 +1,12 @@
 package fr.univpau.paupark.pojo;
 
 public class Tip {
-	private String titre;
-	private String adresse;
-	private String commune;
-	private int capacite;
-	private String commentaire;
-	private String pseudo;
+	private final String titre;
+	private final String adresse;
+	private final String commune;
+	private final int capacite;
+	private final String commentaire;
+	private final String pseudo;
 	private double fiabilite;
 	private int id;
 	

@@ -11,7 +11,7 @@ import java.util.List;
 import fr.univpau.paupark.pojo.Parking;
 
 public class ParkingClickListener implements OnItemClickListener {
-	private List<Parking> parkings;
+	private final List<Parking> parkings;
 
 	public ParkingClickListener(List<Parking> parkings) {
 		this.parkings = parkings;

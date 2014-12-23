@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/underground"
             android:textSize="5pt"
-            android:text="Souterrain" />
+            android:text="@string/filter_ouvrage_underground" />
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -22,13 +22,13 @@
             android:id="@+id/allOuvrage"
             android:checked="true"
             android:textSize="5pt"
-            android:text="Tous" />
+            android:text="@string/filter_tous" />
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/outdoor"
             android:textSize="5pt"
-            android:text="Plein Air" />
+            android:text="@string/filter_ouvrage_outdoor" />
 
     </RadioGroup>
 </RelativeLayout>

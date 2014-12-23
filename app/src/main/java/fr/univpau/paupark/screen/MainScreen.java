@@ -19,30 +19,33 @@ import fr.univpau.paupark.pojo.Tip;
 
 
 public class MainScreen extends Activity {
-	public static ArrayList<Parking> PARKINGS = new ArrayList<Parking>();
-	public static ArrayList<Tip> TIPS = new ArrayList<Tip>();
+	public static ArrayList<Parking> PARKINGS = new ArrayList<>();
+	public static ArrayList<Tip> TIPS = new ArrayList<>();
 	private ActionBar actionBar;
+
+    public static final String PARKING_TAG = "Parking";
+    public static final String TIP_TAG = "Tips";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_screen);
         Settings.PREFERENCE = PreferenceManager.getDefaultSharedPreferences(this);
 		actionBar = getActionBar();
-		
-		actionBar.setDisplayShowHomeEnabled(false);
+
+        actionBar.setDisplayShowHomeEnabled(false);
 	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 	    actionBar.setDisplayShowTitleEnabled(false);
 
 	    Tab tab = actionBar.newTab()
 	                       .setText(R.string.parkings)
-	                       .setTabListener(new TabListener<ParkingsFragment>(
-	                               this, "Parkings", ParkingsFragment.class));
+	                       .setTabListener(new TabListener<>(
+	                               this, PARKING_TAG, ParkingsFragment.class));
 	    actionBar.addTab(tab);
 
 	    tab = actionBar.newTab()
 	                   .setText(R.string.tips)
-	                   .setTabListener(new TabListener<TipsFragment>(
-	                           this, "Bons Plans", TipsFragment.class));
+	                   .setTabListener(new TabListener<>(
+	                           this, TIP_TAG, TipsFragment.class));
 	    actionBar.addTab(tab);
 	}
 	
@@ -85,7 +88,7 @@ public class MainScreen extends Activity {
 	}
 	
 	void refresh(String tab) {
-		if (tab == getString(R.string.parkings)) {
+		if (tab.equals(PARKING_TAG)) {
 			ParkingsFragment fragment = (ParkingsFragment)getFragmentManager().findFragmentByTag(getString(R.string.parkings));
 			fragment.refresh();
 		}

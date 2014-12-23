@@ -1,36 +1,30 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <CheckBoxPreference
         android:key="gps"
-        android:title="Utiliser la géolocalisation"
-        android:summary="Permet de filtrer les parkings par rapport à votre position. Nécessite d'activer votre GPS."
+        android:title="@string/settings_geo"
+        android:summary="@string/settings_geo_summary"
         android:defaultValue="false"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    
+        />
+
     <SeekBarPreference
         android:key="range"
         android:id="@+id/range"
-        android:title="Distance maximum"
+        android:title="@string/settings_distance"
         android:max="4900"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-        
-    <CheckBoxPreference 
+        />
+
+    <CheckBoxPreference
         android:key="pagination"
-        android:title="Activer la pagination"
+        android:title="@string/settings_pagination"
         android:defaultValue="false"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    
+        />
+
     <EditTextPreference
         android:key="pseudo"
-        android:title="Pseudonyme utilisateur"
-        android:summary="Défini le pseudonyme utilisé pour ajouter les bons plans."
+        android:title="@string/settings_pseudo"
+        android:summary="@string/settings_pseudo_summary"
         android:defaultValue="Anonymous"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-   
+        />
+
 </PreferenceScreen>

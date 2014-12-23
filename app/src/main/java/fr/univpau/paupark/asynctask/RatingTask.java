@@ -1,28 +1,29 @@
 package fr.univpau.paupark.asynctask;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 import fr.univpau.paupark.pojo.Tip;
 import fr.univpau.paupark.util.Util;
 
 public class RatingTask extends AsyncTask<Void, Void, String> {
 	private String result="Erreur.";
-	private double note;
-	private int id;
-	private Context context;
-	private ArrayList<Tip> tips;
+	private final double note;
+	private final int id;
+	private final Context context;
+	private final ArrayList<Tip> tips;
 	private final static String url="http://detax.eu/paupark/index.php?action=fiabilite&id=";
 	
 	public RatingTask(Context context, double note, int id, ArrayList<Tip> tips) {
@@ -44,11 +45,11 @@ public class RatingTask extends AsyncTask<Void, Void, String> {
 				new InputStreamReader(
 					response.getEntity().getContent()));
 
-			StringBuffer buffer = new StringBuffer("");
-			String line = "";
+			StringBuilder buffer = new StringBuilder("");
+			String line;
 			String NL = System.getProperty("line.separator");
 			while ((line = inStream.readLine()) != null) {
-				buffer.append(line + NL);
+				buffer.append(line).append(NL);
 			}
 			inStream.close();
 
@@ -80,7 +81,7 @@ public class RatingTask extends AsyncTask<Void, Void, String> {
 				if (tips.get(i).getId() == id) {
 					Tip tip = tips.get(i);
 					tip.setFiabilite(Float.valueOf(result));
-					Util.dialog(context, tip,tips);
+					Util.dialog_detail_tip(context, tip, tips);
 					Log.i("prout", tip.getTitre());
 					break;
 				}

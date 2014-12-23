@@ -25,14 +25,11 @@ import fr.univpau.paupark.presenter.TipAdapter;
 
 public class TipsFragment extends Fragment {
 	private ArrayList<Tip> tips;
-	private ViewGroup container;
 	public static boolean firstTime;
-	private TipAdapter adapter;
+
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-		this.container=container;
-		
         return inflater.inflate(R.layout.tips_fragment, container, false);
     }
     @Override
@@ -61,13 +58,13 @@ public class TipsFragment extends Fragment {
     public void makePages(ArrayList<Tip> tips) {
         if (tips.size() > 0) {
             int size = (Settings.PREFERENCE.getBoolean(Settings.PAGINATION_SETTING_KEY, false)) ? Settings.PAGINATION_MAX_PARKINGS : tips.size();
-            Vector<View> pages = new Vector<View>();
+            Vector<View> pages = new Vector<>();
             Log.i("size", String.valueOf(tips.size()));
             for (int i = 0; i <= (tips.size() / size); i++) {
                 List<Tip> sublist = tips.subList(i * size, Math.min(tips.size(), size + i * size));
                 if (sublist.size() > 0) {
                     ListView listview = new ListView(getActivity());
-                    TipAdapter adapter = new TipAdapter(getActivity(), R.layout.tip_item, sublist);
+                    TipAdapter adapter = new TipAdapter(getActivity(), sublist);
                     pages.add(listview);
                     listview.setAdapter(adapter);
                     listview.setOnItemClickListener(new TipClickListener(tips,getActivity()));

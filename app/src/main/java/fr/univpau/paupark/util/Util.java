@@ -21,7 +21,7 @@ import fr.univpau.paupark.pojo.Tip;
 public class Util {
 	public static final int GPS_STATUS = 43;
 	
-	public static void dialog(Context context, Tip tip, ArrayList<Tip> tips) {
+	public static void dialog_detail_tip(Context context, Tip tip, ArrayList<Tip> tips) {
 		
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
@@ -58,9 +58,9 @@ public class Util {
 			alertDialog.show();
 		
 	}
-	public static void dialog(Context context, int position, ArrayList<Tip>tips) {
+	public static void dialog_detail_tip(Context context, int position, ArrayList<Tip> tips) {
 		Tip tip = tips.get(position);
-		dialog(context, tip,tips);
+		dialog_detail_tip(context, tip, tips);
 	}
 	
 	private static void underlineText(TextView view, String underline, String not_underline){

@@ -5,7 +5,7 @@ import android.content.DialogInterface.OnDismissListener;
 import android.preference.CheckBoxPreference;
 
 public class ActivateGPSDismissListener implements OnDismissListener {
-	private CheckBoxPreference gps;
+	private final CheckBoxPreference gps;
 	
 	public ActivateGPSDismissListener(CheckBoxPreference gps) {
 		this.gps=gps;

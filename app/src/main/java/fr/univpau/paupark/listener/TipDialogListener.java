@@ -1,24 +1,24 @@
 package fr.univpau.paupark.listener;
 
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RatingBar;
+
+import java.util.ArrayList;
+
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.pojo.Tip;
 
 public class TipDialogListener implements OnClickListener {
-	private Context context;
-	private Tip tip;
-	private ArrayList<Tip> tips;
+	private final Context context;
+	private final Tip tip;
+	private final ArrayList<Tip> tips;
 	public TipDialogListener(Context context, Tip tip,ArrayList<Tip> tips) {
 		this.context=context;
 		this.tip=tip;

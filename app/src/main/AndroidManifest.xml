@@ -36,7 +36,7 @@
         </activity>
         <activity
             android:name="fr.univpau.paupark.screen.TipAddScreen"
-            android:label="@string/title_activity_tip_add_screen" 
+            android:label="@string/title_activity_tip_add_screen"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
         </activity>
     </application>

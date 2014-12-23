@@ -3,20 +3,40 @@
 
     <string name="app_name">paupark</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_home">Home</string>
-    <string name="title_activity_parking_screen">ParkingScreen</string>
-    <string name="nom">NOM</string>
-    <string name="commune_places">Commune, xxx places</string>
     <string name="icon_ouvrage">icon_ouvrage</string>
     <string name="icon_prix">icon_prix</string>
-    <string name="title_activity_tip_screen">TipScreen</string>
     <string name="title_activity_main_screen">MainScreen</string>
     <string name="parkings">Parkings</string>
     <string name="tips">Bons Plans</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_tip_add_screen">TipAddScreen</string>
     <string name="add_tip">Ajouter un bon plan</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="filter_nom">Nom</string>
+    <string name="filter_prix">Prix</string>
+    <string name="filter_ouvrage">Ouvrage</string>
+    <string name="filter_places">Places</string>
+    <string name="menu_tip_add">Ajouter un bon plan</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_filter">Filtre</string>
+    <string name="filter_places_min">Min :</string>
+    <string name="filter_places_max">Max :</string>
+    <string name="settings_geo">Utiliser la géolocalisation</string>
+    <string name="settings_geo_summary">Permet de filtrer les parkings par rapport à votre position. Nécessite d\'activer votre GPS.</string>
+    <string name="settings_distance">Distance maximum</string>
+    <string name="settings_pagination">Activer la pagination</string>
+    <string name="settings_pseudo">Pseudonyme utilisateur</string>
+    <string name="settings_pseudo_summary">Défini le pseudonyme utilisé pour ajouter les bons plans.</string>
+    <string name="filter_ouvrage_underground">Souterrain</string>
+    <string name="filter_tous">Tous</string>
+    <string name="filter_ouvrage_outdoor">Plein Air</string>
+    <string name="filter_prix_payant">Payant</string>
+    <string name="filter_prix_free">Gratuit</string>
+    <string name="add_tip_nom">Nom</string>
+    <string name="add_tip_adresse">Adresse</string>
+    <string name="add_tip_commune">Commune</string>
+    <string name="add_tip_places">Places</string>
+    <string name="add_tip_comment">Commentaire</string>
+    <string name="splash_screen_image">Splash Screen Image</string>
 
 </resources>

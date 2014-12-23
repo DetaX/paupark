@@ -30,9 +30,5 @@ public class SplashScreen extends Activity {
 		
 		background.start();
 	}
-	
-	protected void onDestroy(){
-		super.onDestroy();
-	}
-	
+
 }

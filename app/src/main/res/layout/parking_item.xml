@@ -42,7 +42,6 @@
             android:id="@+id/nom"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:text="@string/nom"
         	android:textSize="25sp"
         	android:textStyle="bold"
             />
@@ -51,7 +50,6 @@
             android:id="@+id/commune_places"
             android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:text="@string/commune_places"
         	android:textSize="18sp"
         	android:textStyle="italic"
             />

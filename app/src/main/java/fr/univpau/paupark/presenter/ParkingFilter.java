@@ -22,11 +22,11 @@ public abstract class ParkingFilter {
     public static boolean underground;
     public static String nom;
 
-    public static ArrayList<Parking> gps(ArrayList<Parking> parkings) {
+    private static ArrayList<Parking> gps(ArrayList<Parking> parkings) {
         int range = 5000;
         float results[] = new float[1];
         Log.i("longitude", String.valueOf(longitude));Log.i("latitude", String.valueOf(latitude));
-        ArrayList<Parking> filteredList = new ArrayList<Parking>();
+        ArrayList<Parking> filteredList = new ArrayList<>();
         for(Parking pk:parkings){
             Location.distanceBetween(latitude, longitude, pk.getCoord()[0], pk.getCoord()[1], results);
             Log.i("distance", String.valueOf(results[0]));
@@ -36,8 +36,8 @@ public abstract class ParkingFilter {
         return filteredList;
     }
 
-    public static ArrayList<Parking> price(ArrayList<Parking> parkings) {
-        ArrayList<Parking> filteredList = new ArrayList<Parking>();
+    private static ArrayList<Parking> price(ArrayList<Parking> parkings) {
+        ArrayList<Parking> filteredList = new ArrayList<>();
         for(Parking pk:parkings) {
             if (pk.isPayant() != free)
                 filteredList.add(pk);
@@ -45,8 +45,8 @@ public abstract class ParkingFilter {
         return filteredList;
     }
 
-    public static ArrayList<Parking> nom(ArrayList<Parking> parkings) {
-        ArrayList<Parking> filteredList = new ArrayList<Parking>();
+    private static ArrayList<Parking> nom(ArrayList<Parking> parkings) {
+        ArrayList<Parking> filteredList = new ArrayList<>();
         for(Parking pk:parkings) {
             if (pk.getNom().toLowerCase().contains(nom.toLowerCase()))
                 filteredList.add(pk);
@@ -54,8 +54,8 @@ public abstract class ParkingFilter {
         return filteredList;
     }
 
-    public static ArrayList<Parking> ouvrage(ArrayList<Parking> parkings) {
-        ArrayList<Parking> filteredList = new ArrayList<Parking>();
+    private static ArrayList<Parking> ouvrage(ArrayList<Parking> parkings) {
+        ArrayList<Parking> filteredList = new ArrayList<>();
         for(Parking pk:parkings) {
             if (pk.isSouterrain() == underground)
                 filteredList.add(pk);
@@ -63,9 +63,8 @@ public abstract class ParkingFilter {
         return filteredList;
     }
 
-    public static ArrayList<Parking> places(ArrayList<Parking> parkings) {
-        ParkingFilter.min = min;
-        ArrayList<Parking> filteredList = new ArrayList<Parking>();
+    private static ArrayList<Parking> places(ArrayList<Parking> parkings) {
+        ArrayList<Parking> filteredList = new ArrayList<>();
         if (max != 0 && max < min)
             return filteredList;
 

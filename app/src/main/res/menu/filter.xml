@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/nomMenu"
-        android:title="Nom"
+        android:title="@string/filter_nom"
         />
     <item android:id="@+id/prixMenu"
-        android:title="Prix"
+        android:title="@string/filter_prix"
         />
     <item android:id="@+id/ouvrageMenu"
-        android:title="Ouvrage"
+        android:title="@string/filter_ouvrage"
         />
     <item android:id="@+id/placesMenu"
-        android:title="Place"
+        android:title="@string/filter_places"
         />
 </menu>

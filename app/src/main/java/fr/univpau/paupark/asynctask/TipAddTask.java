@@ -1,28 +1,29 @@
 package fr.univpau.paupark.asynctask;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URLEncoder;
-import java.util.ArrayList;
+import android.app.Activity;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.widget.Toast;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
 import fr.univpau.paupark.pojo.Tip;
 
 public class TipAddTask extends AsyncTask<Void, Void, String> {
 
 	private String result="Erreur.";
-	private Context context;
-	private ArrayList<Tip> tips;
-	private Tip tip;
+	private final Context context;
+	private final ArrayList<Tip> tips;
+	private final Tip tip;
 	private final static String url="http://detax.eu/paupark/index.php?action=add&titre=";
 	
 	public TipAddTask(Context context, ArrayList<Tip> tips, Tip tip) {
@@ -49,11 +50,11 @@ public class TipAddTask extends AsyncTask<Void, Void, String> {
 				new InputStreamReader(
 					response.getEntity().getContent()));
 
-			StringBuffer buffer = new StringBuffer("");
-			String line = "";
+			StringBuilder buffer = new StringBuilder("");
+			String line;
 			String NL = System.getProperty("line.separator");
 			while ((line = inStream.readLine()) != null) {
-				buffer.append(line + NL);
+				buffer.append(line).append(NL);
 			}
 			inStream.close();
 

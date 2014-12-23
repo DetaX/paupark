@@ -1,14 +1,14 @@
 package fr.univpau.paupark.listener;
 
-import fr.univpau.paupark.util.Util;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 
+import fr.univpau.paupark.util.Util;
+
 public class ActivateGPSListener implements OnClickListener {
-	private Activity context;
+	private final Activity context;
 	
 	public ActivateGPSListener(Activity context) {
 		this.context=context;

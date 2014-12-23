@@ -24,8 +24,8 @@ import fr.univpau.paupark.util.DBHandler;
 
 public class TipsTask extends AsyncTask<Void, Void, ArrayList<Tip>> {
 	private ProgressDialog progress;
-	private String result="Erreur.";
-    private TipsFragment fragment;
+	private String result="";
+    private final TipsFragment fragment;
 	private final static String url="http://detax.eu/paupark/";
 	
 	public TipsTask (TipsFragment fragment) {
@@ -53,15 +53,15 @@ public class TipsTask extends AsyncTask<Void, Void, ArrayList<Tip>> {
 				new InputStreamReader(
 					response.getEntity().getContent()));
 
-			StringBuffer buffer = new StringBuffer("");
-			String line = "";
+			StringBuilder buffer = new StringBuilder("");
+			String line;
 			String NL = System.getProperty("line.separator");
 			while ((line = inStream.readLine()) != null) {
-				buffer.append(line + NL);
+				buffer.append(line).append(NL);
 			}
 			inStream.close();
 
-			result = buffer.toString();			
+			result = buffer.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -104,13 +104,12 @@ public class TipsTask extends AsyncTask<Void, Void, ArrayList<Tip>> {
 		else {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(fragment.getActivity());
 				alertDialogBuilder
-					.setMessage("Impossible de télécharger la liste de tips. \r\nCliquez sur options pour vérifier votre connexion à Internet ")
+					.setMessage("Impossible de télécharger la liste de tips. \r\nCliquez sur options pour vérifier votre connexion à Internet\n\nCliquez sur OK pour chager la liste de votre dernière connexion")
 					.setCancelable(false)
 					.setNeutralButton("Options", new NoDataDialogListener(fragment.getActivity(),db,fragment))
-					.setPositiveButton("Ok",new NoDataDialogListener(fragment.getActivity(),db,fragment));
+					.setPositiveButton("Ok", new NoDataDialogListener(fragment.getActivity(), db, fragment));
 
 					AlertDialog alertDialog = alertDialogBuilder.create();
-	 
 					alertDialog.show();
 		}
         if (progress.isShowing()) 

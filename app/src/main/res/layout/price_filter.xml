@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/paying"
             android:textSize="6pt"
-            android:text="Payant" />
+            android:text="@string/filter_prix_payant" />
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -22,13 +22,13 @@
             android:id="@+id/allPrice"
             android:checked="true"
             android:textSize="6pt"
-            android:text="Tous" />
+            android:text="@string/filter_tous" />
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/free"
             android:textSize="6pt"
-            android:text="Gratuit" />
+            android:text="@string/filter_prix_free" />
 
     </RadioGroup>
 </RelativeLayout>

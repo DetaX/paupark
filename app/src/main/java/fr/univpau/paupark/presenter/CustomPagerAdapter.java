@@ -8,7 +8,7 @@ import java.util.Vector;
 
 public class CustomPagerAdapter extends PagerAdapter {
 
-    private Vector<View> pages;
+    private final Vector<View> pages;
 
     public CustomPagerAdapter(Vector<View> pages) {
         this.pages=pages;

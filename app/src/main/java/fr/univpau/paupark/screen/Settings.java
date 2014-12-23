@@ -11,7 +11,7 @@ import android.preference.PreferenceActivity;
 import fr.univpau.paupark.util.Util;
 
 public class Settings extends PreferenceActivity implements OnSharedPreferenceChangeListener{
-	SettingsFragment fragment;
+	private SettingsFragment fragment;
     public static final String GEOLOCATION_SETTING_KEY = "gps";
     public static final String GEOLOCATION_RANGE_SETTING_KEY = "range";
     public static final String PSEUDO_SETTING_KEY = "pseudo";

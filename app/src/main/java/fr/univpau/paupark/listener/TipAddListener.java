@@ -15,8 +15,8 @@ import fr.univpau.paupark.screen.Settings;
 
 public class TipAddListener implements OnClickListener {
 	
-	private Context context;
-	private ArrayList<Tip> tips;
+	private final Context context;
+	private final ArrayList<Tip> tips;
 		
 	public TipAddListener(Context context, ArrayList<Tip> tips){
 		this.context = context;

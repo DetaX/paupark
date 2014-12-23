@@ -1,12 +1,12 @@
 package fr.univpau.paupark.pojo;
 
 public class Parking {
-	private boolean souterrain;
-	private boolean payant;
-	private String commune;
-	private String nom;
-	private int places;
-	private Double[] coord;
+	private final boolean souterrain;
+	private final boolean payant;
+	private final String commune;
+	private final String nom;
+	private final int places;
+	private final Double[] coord;
 	
 	public Parking(boolean souterrain, boolean payant, String commune, String nom, int places, Double[] coord) {
 		this.souterrain = souterrain;

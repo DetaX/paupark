@@ -85,7 +85,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
     public ArrayList<Tip> getAllTips() {
-        ArrayList<Tip> tips = new ArrayList<Tip>();
+        ArrayList<Tip> tips = new ArrayList<>();
         String query = "SELECT * FROM Tips";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -106,7 +106,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return tips;
     }
     public ArrayList<Parking> getAllParkings() {
-        ArrayList<Parking> parkings = new ArrayList<Parking>();
+        ArrayList<Parking> parkings = new ArrayList<>();
         String query = "SELECT * FROM Parkings";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);

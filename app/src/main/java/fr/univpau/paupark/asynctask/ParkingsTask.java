@@ -3,7 +3,6 @@ package fr.univpau.paupark.asynctask;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.widget.ListView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -25,9 +24,8 @@ import fr.univpau.paupark.util.DBHandler;
 
 public class ParkingsTask extends AsyncTask<Void, Void, ArrayList<Parking>> {
 	private ProgressDialog progress;
-	ListView list;
-	String result="Erreur.";
-    private ParkingsFragment fragment;
+	private String result="";
+    private final ParkingsFragment fragment;
 	private final static String url="http://opendata.agglo-pau.fr/sc/webserv.php?serv=getSj&ui=542293D8B5&did=18&proj=WGS84";
 	
 	public ParkingsTask (ParkingsFragment fragment) {
@@ -54,15 +52,15 @@ public class ParkingsTask extends AsyncTask<Void, Void, ArrayList<Parking>> {
 				new InputStreamReader(
 					response.getEntity().getContent()));
 
-			StringBuffer buffer = new StringBuffer("");
-			String line = "";
+			StringBuilder buffer = new StringBuilder("");
+			String line;
 			String NL = System.getProperty("line.separator");
 			while ((line = inStream.readLine()) != null) {
-				buffer.append(line + NL);
+				buffer.append(line).append(NL);
 			}
 			inStream.close();
 
-			result = buffer.toString();			
+			result = buffer.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -1,20 +1,21 @@
 package fr.univpau.paupark.listener;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.widget.RatingBar;
+
+import java.util.ArrayList;
+
 import fr.univpau.paupark.asynctask.RatingTask;
 import fr.univpau.paupark.pojo.Tip;
 import fr.univpau.paupark.util.Util;
 
 public class RatingListener implements OnClickListener {
-	private Context context;
-	private Tip tip;
-	private RatingBar note;
-	private ArrayList<Tip> tips;
+	private final Context context;
+	private final Tip tip;
+	private final RatingBar note;
+	private final ArrayList<Tip> tips;
 	public RatingListener(Context context, Tip tip, RatingBar note, ArrayList<Tip> tips) {
 		this.context=context;
 		this.tip=tip;
@@ -26,7 +27,7 @@ public class RatingListener implements OnClickListener {
 	public void onClick(DialogInterface dialog, int which) {
 		if (which == DialogInterface.BUTTON_NEGATIVE)  {
 			dialog.dismiss();
-			Util.dialog(context,tip,tips);	
+			Util.dialog_detail_tip(context, tip, tips);
 		}
 		else {
 			

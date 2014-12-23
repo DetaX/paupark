@@ -14,7 +14,7 @@ import fr.univpau.paupark.pojo.Parking;
 
 public class ParkingAdapter extends ArrayAdapter<Parking> {
 	private final Context context;
-	private List<Parking> parkings;
+	private final List<Parking> parkings;
 	
 	@Override
 	public int getCount() {
@@ -23,8 +23,8 @@ public class ParkingAdapter extends ArrayAdapter<Parking> {
         else return 0;
 	}
 
-	public ParkingAdapter(Context context, int resource, List<Parking> parkings) {
-		super(context, resource);
+	public ParkingAdapter(Context context, List<Parking> parkings) {
+		super(context, fr.univpau.paupark.R.layout.parking_item);
 		this.context = context;
 		this.parkings = parkings;
 	}
