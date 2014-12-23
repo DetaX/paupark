@@ -1,9 +1,8 @@
 package fr.univpau.paupark.asynctask;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -13,35 +12,29 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.os.AsyncTask;
-import android.widget.ListView;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 import fr.univpau.paupark.listener.NoDataDialogListener;
 import fr.univpau.paupark.pojo.Tip;
-import fr.univpau.paupark.presenter.TipAdapter;
 import fr.univpau.paupark.screen.TipsFragment;
+import fr.univpau.paupark.util.DBHandler;
 
 public class TipsTask extends AsyncTask<Void, Void, ArrayList<Tip>> {
 	private ProgressDialog progress;
-	private Context context;
-	private ListView list;
 	private String result="Erreur.";
-	private TipAdapter adapter;
-	private ArrayList<Tip> tips;
+    private TipsFragment fragment;
 	private final static String url="http://detax.eu/paupark/";
 	
-	public TipsTask (Context context, TipAdapter adapter, ArrayList<Tip> tips) {
-		this.context=context;
-		this.adapter=adapter;
-		this.tips=tips;
+	public TipsTask (TipsFragment fragment) {
+		this.fragment=fragment;
 	}
 	
 	@Override	
 	 protected void onPreExecute() {
-		progress = new ProgressDialog(context);
+		progress = new ProgressDialog(fragment.getActivity());
         progress.setMessage("Téléchargement des données");
         progress.setCancelable(false);
         progress.show();
@@ -93,28 +86,29 @@ public class TipsTask extends AsyncTask<Void, Void, ArrayList<Tip>> {
 				double fiabilite = obj.getDouble("fiabilite");
 				int id = obj.getInt("id");
 				Tip tip = new Tip(titre, adresse, commune, capacite, commentaire, pseudo, fiabilite, id);
-				tips.add(tip);
+                fragment.getTips().add(tip);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return tips;
+		return fragment.getTips();
 	}
 	
 	protected void onPostExecute(ArrayList<Tip>tips) {
+        DBHandler db = new DBHandler(fragment.getActivity());
 		if (tips.size() > 0) {
-			TipsFragment.firstTime = true;
-			adapter.notifyDataSetChanged();
+			TipsFragment.firstTime = false;
+            db.addAllTips(tips);
+            fragment.makePages(tips);
 		}
 		else {
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(fragment.getActivity());
 				alertDialogBuilder
 					.setMessage("Impossible de télécharger la liste de tips. \r\nCliquez sur options pour vérifier votre connexion à Internet ")
 					.setCancelable(false)
-					.setNeutralButton("Options", new NoDataDialogListener(context))
-					.setPositiveButton("Ok",new NoDataDialogListener(context));
-				
-	 
+					.setNeutralButton("Options", new NoDataDialogListener(fragment.getActivity(),db,fragment))
+					.setPositiveButton("Ok",new NoDataDialogListener(fragment.getActivity(),db,fragment));
+
 					AlertDialog alertDialog = alertDialogBuilder.create();
 	 
 					alertDialog.show();

@@ -1,18 +1,19 @@
 package fr.univpau.paupark.listener;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+
+import java.util.List;
+
 import fr.univpau.paupark.pojo.Parking;
 
 public class ParkingClickListener implements OnItemClickListener {
-	private ArrayList<Parking> parkings;
+	private List<Parking> parkings;
 
-	public ParkingClickListener(ArrayList<Parking> parkings) {
+	public ParkingClickListener(List<Parking> parkings) {
 		this.parkings = parkings;
 	}
 

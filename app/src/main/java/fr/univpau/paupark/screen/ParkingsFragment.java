@@ -35,7 +35,6 @@ import fr.univpau.paupark.presenter.ParkingFilter;
 
 public class ParkingsFragment extends Fragment {
     private ArrayList<Parking> parkings;
-    private ArrayList<Parking> filteredList;
     public static boolean firstTime;
     private ViewGroup container;
     private LocationManager locationManager;
@@ -74,8 +73,8 @@ public class ParkingsFragment extends Fragment {
     }
 
     public void makePages(ArrayList<Parking> parkings) {
-        parkings = ParkingFilter.filter(parkings);
         if (parkings.size() > 0) {
+            parkings = ParkingFilter.filter(parkings);
             int size = (Settings.PREFERENCE.getBoolean(Settings.PAGINATION_SETTING_KEY, false)) ? Settings.PAGINATION_MAX_PARKINGS : parkings.size();
             Vector<View> pages = new Vector<View>();
             Log.i("size", String.valueOf(parkings.size()));
@@ -86,13 +85,12 @@ public class ParkingsFragment extends Fragment {
                     ParkingAdapter adapter = new ParkingAdapter(getActivity(), fr.univpau.paupark.R.layout.parking_item, sublist);
                     pages.add(listview);
                     listview.setAdapter(adapter);
-                    listview.setOnItemClickListener(new ParkingClickListener(parkings));
+                    listview.setOnItemClickListener(new ParkingClickListener(sublist));
                 }
             }
             ViewPager vp = (ViewPager) getActivity().findViewById(R.id.pager);
             CustomPagerAdapter pager_adapter = new CustomPagerAdapter(pages);
             vp.setAdapter(pager_adapter);
-            filteredList = parkings;
         } else {
             ViewPager vp = (ViewPager) getActivity().findViewById(R.id.pager);
             CustomPagerAdapter pager_adapter = new CustomPagerAdapter(new Vector<View>());
@@ -273,7 +271,7 @@ public class ParkingsFragment extends Fragment {
 
     public void refresh() {
         parkings.clear();
-        ParkingsTask parkingtask = new ParkingsTask(container.getContext(), parkings, this);
+        ParkingsTask parkingtask = new ParkingsTask(this);
         parkingtask.execute();
     }
 }

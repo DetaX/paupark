@@ -2,10 +2,7 @@ package fr.univpau.paupark.asynctask;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.widget.ListView;
 
 import org.apache.http.HttpResponse;
@@ -24,31 +21,25 @@ import java.util.ArrayList;
 import fr.univpau.paupark.listener.NoDataDialogListener;
 import fr.univpau.paupark.pojo.Parking;
 import fr.univpau.paupark.screen.ParkingsFragment;
+import fr.univpau.paupark.util.DBHandler;
 
 public class ParkingsTask extends AsyncTask<Void, Void, ArrayList<Parking>> {
 	private ProgressDialog progress;
-	private Context context;
 	ListView list;
 	String result="Erreur.";
-
-	ArrayList<Parking> parkings;
     private ParkingsFragment fragment;
 	private final static String url="http://opendata.agglo-pau.fr/sc/webserv.php?serv=getSj&ui=542293D8B5&did=18&proj=WGS84";
 	
-	public ParkingsTask (Context context, ArrayList<Parking> parkings, ParkingsFragment fragment) {
-		this.context=context;
-
-		this.parkings=parkings;
+	public ParkingsTask (ParkingsFragment fragment) {
         this.fragment = fragment;
 	}
 	
 	@Override	
 	 protected void onPreExecute() {
-		progress = new ProgressDialog(context);
+		progress = new ProgressDialog(fragment.getActivity());
         progress.setMessage("Téléchargement des données");
         progress.setCancelable(false);
         progress.show();
-         
      }
 
 	
@@ -96,27 +87,28 @@ public class ParkingsTask extends AsyncTask<Void, Void, ArrayList<Parking>> {
 				String nom = obj.getJSONObject("properties").getString("NOM");
 				int places = obj.getJSONObject("properties").getInt("Places");
 				Parking parking = new Parking(souterrain,payant,commune,nom,places,new Double[]{x,y});
-				parkings.add(parking);
+                fragment.getParkings().add(parking);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return parkings;
+		return fragment.getParkings();
 	}
 	
 	protected void onPostExecute(ArrayList<Parking>parkings) {
+        DBHandler db = new DBHandler(fragment.getActivity());
 		if (parkings.size() > 0) {
+            db.addAllParkings(parkings);
 			ParkingsFragment.firstTime = false;
-			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             fragment.makePages(parkings);
 		}
 		else {
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(fragment.getActivity());
 				alertDialogBuilder
-					.setMessage("Impossible de télécharger la liste de parkings. \r\nCliquez sur options pour vérifier votre connexion à Internet ")
+					.setMessage("Impossible de télécharger la liste de parkings. \r\nCliquez sur options pour vérifier votre connexion à Internet\r\nCliquez sur OK pour chager la liste de votre dernière connexion")
 					.setCancelable(false)
-					.setNeutralButton("Options", new NoDataDialogListener(context))
-					.setPositiveButton("Ok",new NoDataDialogListener(context));
+					.setNeutralButton("Options", new NoDataDialogListener(fragment.getActivity(), db, fragment))
+					.setPositiveButton("Ok", new NoDataDialogListener(fragment.getActivity(), db, fragment));
 
 					AlertDialog alertDialog = alertDialogBuilder.create();
 	 

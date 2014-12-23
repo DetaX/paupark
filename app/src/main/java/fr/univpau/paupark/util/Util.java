@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.listener.ActivateGPSDismissListener;
 import fr.univpau.paupark.listener.ActivateGPSListener;
@@ -78,7 +79,5 @@ public class Util {
         alert.setOnDismissListener(new ActivateGPSDismissListener(gps));
         alert.show();
     }
-	
-
 
 }

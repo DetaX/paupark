@@ -36,13 +36,13 @@ public class MainScreen extends Activity {
 	    Tab tab = actionBar.newTab()
 	                       .setText(R.string.parkings)
 	                       .setTabListener(new TabListener<ParkingsFragment>(
-	                               this, getString(R.string.parkings), ParkingsFragment.class));
+	                               this, "Parkings", ParkingsFragment.class));
 	    actionBar.addTab(tab);
 
 	    tab = actionBar.newTab()
 	                   .setText(R.string.tips)
 	                   .setTabListener(new TabListener<TipsFragment>(
-	                           this, getString(R.string.tips), TipsFragment.class));
+	                           this, "Bons Plans", TipsFragment.class));
 	    actionBar.addTab(tab);
 	}
 	
