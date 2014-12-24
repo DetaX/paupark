@@ -21,7 +21,7 @@ public class SplashScreen extends Activity {
 					startActivity(i);
 					finish();
 				}
-				catch(Exception e){
+				catch(Exception ignored){
 				}
 			}
 		};

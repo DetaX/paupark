@@ -13,9 +13,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import fr.univpau.paupark.R;
-import fr.univpau.paupark.listener.ActivateGPSDismissListener;
-import fr.univpau.paupark.listener.ActivateGPSListener;
-import fr.univpau.paupark.listener.TipDialogListener;
+import fr.univpau.paupark.listener.gps.ActivateGPSDismissListener;
+import fr.univpau.paupark.listener.gps.ActivateGPSListener;
+import fr.univpau.paupark.listener.tip.TipDialogListener;
 import fr.univpau.paupark.pojo.Tip;
 
 public class Util {

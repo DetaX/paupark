@@ -1,4 +1,4 @@
-package fr.univpau.paupark.listener;
+package fr.univpau.paupark.listener.tip;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,7 +11,7 @@ import fr.univpau.paupark.asynctask.RatingTask;
 import fr.univpau.paupark.pojo.Tip;
 import fr.univpau.paupark.util.Util;
 
-public class RatingListener implements OnClickListener {
+class RatingListener implements OnClickListener {
 	private final Context context;
 	private final Tip tip;
 	private final RatingBar note;

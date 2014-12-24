@@ -5,19 +5,13 @@ import android.content.Context;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +19,12 @@ import java.util.Vector;
 
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.asynctask.ParkingsTask;
-import fr.univpau.paupark.listener.CustomLocationListener;
 import fr.univpau.paupark.listener.ParkingClickListener;
+import fr.univpau.paupark.listener.filter.NameClickListener;
+import fr.univpau.paupark.listener.filter.OuvrageClickListener;
+import fr.univpau.paupark.listener.filter.PlacesClickListener;
+import fr.univpau.paupark.listener.filter.PriceClickListener;
+import fr.univpau.paupark.listener.gps.CustomLocationListener;
 import fr.univpau.paupark.pojo.Parking;
 import fr.univpau.paupark.presenter.CustomPagerAdapter;
 import fr.univpau.paupark.presenter.ParkingAdapter;
@@ -69,6 +67,7 @@ public class ParkingsFragment extends Fragment {
     }
 
     public void makePages(ArrayList<Parking> parkings) {
+        if (parkings == null) parkings = this.parkings;
         if (parkings.size() > 0) {
             parkings = ParkingFilter.filter(parkings);
             int size = (Settings.PREFERENCE.getBoolean(Settings.PAGINATION_SETTING_KEY, false)) ? Settings.PAGINATION_MAX_PARKINGS : parkings.size();
@@ -98,158 +97,22 @@ public class ParkingsFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         MenuItem add = menu.findItem(R.id.add);
         add.setVisible(false);
-
+        // inflate filter menu
         final MenuItem filterMenu = menu.findItem(R.id.filtermenu);
         inflater.inflate(R.menu.filter, filterMenu.getSubMenu());
-        MenuItem nom = filterMenu.getSubMenu().findItem(R.id.nomMenu);
-        nom.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                final SearchView searchFilter = new SearchView(getActivity());
-                searchFilter.setIconifiedByDefault(false);
-                getActivity().getActionBar().setCustomView(searchFilter);
-                getActivity().getActionBar().setDisplayShowCustomEnabled(true);
-                searchFilter.setQuery(ParkingFilter.nom, false);
-                searchFilter.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String s) {
-                        searchFilter.clearFocus();
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String s) {
-                        if (s.length() > 0) {
-                            ParkingFilter.nomFilter = true;
-                            ParkingFilter.nom = s;
-                        } else {
-                            ParkingFilter.nomFilter = false;
-                            ParkingFilter.nom = "";
-                        }
-                        makePages(parkings);
-                        return false;
-                    }
-                });
-                return false;
-            }
-        });
-        MenuItem prix = filterMenu.getSubMenu().findItem(R.id.prixMenu);
-        prix.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                getActivity().getActionBar().setCustomView(R.layout.price_filter);
-                getActivity().getActionBar().setDisplayShowCustomEnabled(true);
-                RadioGroup radiogroup = (RadioGroup) getActivity().findViewById(R.id.prix);
-                if (ParkingFilter.priceFilter) {
-                    RadioButton radio;
-                    if (ParkingFilter.free)
-                        radio = (RadioButton) getActivity().findViewById(R.id.free);
-                    else
-                        radio = (RadioButton) getActivity().findViewById(R.id.paying);
-                    radio.setChecked(true);
-                }
-                radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                        ParkingFilter.priceFilter = true;
-                        if (i == R.id.paying)
-                            ParkingFilter.free = false;
-                        else if (i == R.id.free)
-                            ParkingFilter.free = true;
-                        else
-                            ParkingFilter.priceFilter = false;
-                        makePages(parkings);
-                    }
-                });
-                return false;
-            }
-        });
+        // filter by name
+        MenuItem name = filterMenu.getSubMenu().findItem(R.id.nomMenu);
+        name.setOnMenuItemClickListener(new NameClickListener(this));
+        //filter by price
+        MenuItem price = filterMenu.getSubMenu().findItem(R.id.prixMenu);
+        price.setOnMenuItemClickListener(new PriceClickListener(this));
+        //filter by ouvrage
         MenuItem ouvrage = filterMenu.getSubMenu().findItem(R.id.ouvrageMenu);
-        ouvrage.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                getActivity().getActionBar().setCustomView(R.layout.ouvrage_filter);
-                getActivity().getActionBar().setDisplayShowCustomEnabled(true);
-                RadioGroup radiogroup = (RadioGroup) getActivity().findViewById(R.id.ouvrage);
-                if (ParkingFilter.ouvrageFilter) {
-                    RadioButton radio;
-                    if (ParkingFilter.underground)
-                        radio = (RadioButton) getActivity().findViewById(R.id.underground);
-                    else
-                        radio = (RadioButton) getActivity().findViewById(R.id.outdoor);
-                    radio.setChecked(true);
-                }
-                radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                        ParkingFilter.ouvrageFilter = true;
-                        if (i == R.id.underground)
-                            ParkingFilter.underground = true;
-                        else if (i == R.id.outdoor)
-                            ParkingFilter.underground = false;
-                        else
-                            ParkingFilter.ouvrageFilter = false;
-                        makePages(parkings);
-
-                    }
-                });
-                return false;
-            }
-        });
-
+        ouvrage.setOnMenuItemClickListener(new OuvrageClickListener(this));
+        //filter by places
         MenuItem places = filterMenu.getSubMenu().findItem(R.id.placesMenu);
-        places.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                getActivity().getActionBar().setCustomView(R.layout.places_filter);
-                getActivity().getActionBar().setDisplayShowCustomEnabled(true);
-                final EditText editMinPlace = (EditText) getActivity().findViewById(R.id.editMinPlace);
-                final EditText editMaxPlace = (EditText) getActivity().findViewById(R.id.editMaxPlace);
-                editMinPlace.setText(String.valueOf(ParkingFilter.min));
-                editMaxPlace.setText(String.valueOf(ParkingFilter.max));
-                editMinPlace.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+        places.setOnMenuItemClickListener(new PlacesClickListener(this));
 
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        int max = (editMaxPlace.getText().length() == 0) ? 0 : Integer.parseInt(editMaxPlace.getText().toString());
-                        int min = (editable.length() == 0) ? 0 : Integer.parseInt(editable.toString());
-                        ParkingFilter.placesFilter = (min != 0 || max != 0);
-                        ParkingFilter.min = min;
-                        ParkingFilter.max = max;
-                        makePages(parkings);
-                    }
-                });
-                editMaxPlace.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        int min = (editMinPlace.getText().length() == 0) ? 0 : Integer.parseInt(editMinPlace.getText().toString());
-                        int max = (editable.length() == 0) ? 0 : Integer.parseInt(editable.toString());
-                        ParkingFilter.placesFilter = (min != 0 || max != 0);
-                        ParkingFilter.min = min;
-                        ParkingFilter.max = max;
-                        makePages(parkings);
-                    }
-                });
-                return false;
-            }
-        });
         super.onCreateOptionsMenu(menu, inflater);
     }
 

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
 import fr.univpau.paupark.R;
-import fr.univpau.paupark.listener.TipAddListener;
+import fr.univpau.paupark.listener.tip.TipAddListener;
 
 public class TipAddScreen extends Activity {
 

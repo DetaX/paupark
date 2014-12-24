@@ -17,7 +17,7 @@ import java.util.Vector;
 
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.asynctask.TipsTask;
-import fr.univpau.paupark.listener.TipClickListener;
+import fr.univpau.paupark.listener.tip.TipClickListener;
 import fr.univpau.paupark.pojo.Tip;
 import fr.univpau.paupark.presenter.CustomPagerAdapter;
 import fr.univpau.paupark.presenter.TipAdapter;

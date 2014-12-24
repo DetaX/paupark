@@ -1,4 +1,4 @@
-package fr.univpau.paupark.listener;
+package fr.univpau.paupark.listener.tip;
 
 import android.app.AlertDialog;
 import android.content.Context;

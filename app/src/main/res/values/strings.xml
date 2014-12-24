@@ -41,7 +41,7 @@
     <string name="asynctask_download">Téléchargement des données</string>
     <string name="parkingtask_nodata">Impossible de télécharger la liste de parkings.\r\nCliquez sur options pour vérifier votre connexion à Internet\r\nCliquez sur OK pour chager la liste de votre dernière connexion</string>
     <string name="dialog_options">Options</string>
-    <string name="dialog_ok">Ok</string>
+    <string name="dialog_ok">OK</string>
     <string name="tipstask_nodata">Impossible de télécharger la liste de bons plans.\r\nCliquez sur options pour vérifier votre connexion à Internet\r\nCliquez sur OK pour chager la liste de votre dernière connexion</string>
     <string name="new_note">"Nouvelle fiabilité : "</string>
     <string name="error">Il y a eu une erreur</string>

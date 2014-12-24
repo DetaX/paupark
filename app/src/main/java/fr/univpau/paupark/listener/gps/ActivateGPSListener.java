@@ -1,4 +1,4 @@
-package fr.univpau.paupark.listener;
+package fr.univpau.paupark.listener.gps;
 
 import android.app.Activity;
 import android.content.DialogInterface;
