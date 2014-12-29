@@ -20,6 +20,7 @@ import java.util.Vector;
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.asynctask.ParkingsTask;
 import fr.univpau.paupark.listener.ParkingClickListener;
+import fr.univpau.paupark.listener.filter.ClearClickListener;
 import fr.univpau.paupark.listener.filter.NameClickListener;
 import fr.univpau.paupark.listener.filter.OuvrageClickListener;
 import fr.univpau.paupark.listener.filter.PlacesClickListener;
@@ -112,6 +113,9 @@ public class ParkingsFragment extends Fragment {
         //filter by places
         MenuItem places = filterMenu.getSubMenu().findItem(R.id.placesMenu);
         places.setOnMenuItemClickListener(new PlacesClickListener(this));
+        // clear filter
+        MenuItem clear = filterMenu.getSubMenu().findItem(R.id.clearMenu);
+        clear.setOnMenuItemClickListener(new ClearClickListener(this));
 
         super.onCreateOptionsMenu(menu, inflater);
     }

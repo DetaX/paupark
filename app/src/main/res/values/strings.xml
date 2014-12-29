@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">paupark</string>
-    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="app_name">Paupark</string>
     <string name="icon_ouvrage">icon_ouvrage</string>
     <string name="icon_prix">icon_prix</string>
     <string name="title_activity_main_screen">MainScreen</string>
@@ -64,5 +63,6 @@
     <string name="detail_tip_gmap">Voir sur GMAPs</string>
     <string name="gps_non_active">Le GPS est désactivé sur votre appareil. Voulez-vous l\'activer ?</string>
     <string name="activate_gps">Activer le GPS dans les options</string>
+    <string name="filter_clear">Supprimer les filtres</string>
 
 </resources>

@@ -12,4 +12,7 @@
     <item android:id="@+id/placesMenu"
         android:title="@string/filter_places"
         />
+    <item android:id="@+id/clearMenu"
+        android:title="@string/filter_clear"
+        />
 </menu>
