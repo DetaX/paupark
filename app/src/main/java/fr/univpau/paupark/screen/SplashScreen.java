@@ -16,7 +16,7 @@ public class SplashScreen extends Activity {
 		Thread background = new Thread(){
 			public void run(){
 				try {	
-					sleep(300);
+					sleep(3000);
 					Intent i = new Intent(getBaseContext(), MainScreen.class);
 					startActivity(i);
 					finish();
