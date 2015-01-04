@@ -38,12 +38,14 @@ public class MainScreen extends Activity {
 
 	    Tab tab = actionBar.newTab()
 	                       .setText(R.string.parkings)
+                           .setTag(PARKING_TAG)
 	                       .setTabListener(new TabListener<>(
 	                               this, PARKING_TAG, ParkingsFragment.class));
 	    actionBar.addTab(tab);
 
 	    tab = actionBar.newTab()
 	                   .setText(R.string.tips)
+                       .setTag(TIP_TAG)
 	                   .setTabListener(new TabListener<>(
 	                           this, TIP_TAG, TipsFragment.class));
 	    actionBar.addTab(tab);
@@ -66,7 +68,7 @@ public class MainScreen extends Activity {
 
 		    case R.id.refresh:
 		    {
-		        refresh(actionBar.getSelectedTab().getText().toString());
+		        refresh(actionBar.getSelectedTab().getTag().toString());
 		        return true;
 		    }
 	
@@ -89,11 +91,11 @@ public class MainScreen extends Activity {
 	
 	void refresh(String tab) {
 		if (tab.equals(PARKING_TAG)) {
-			ParkingsFragment fragment = (ParkingsFragment)getFragmentManager().findFragmentByTag(getString(R.string.parkings));
+			ParkingsFragment fragment = (ParkingsFragment)getFragmentManager().findFragmentByTag(PARKING_TAG);
 			fragment.refresh();
 		}
 		else {
-			TipsFragment fragment = (TipsFragment)getFragmentManager().findFragmentByTag(getString(R.string.tips));
+			TipsFragment fragment = (TipsFragment)getFragmentManager().findFragmentByTag(TIP_TAG);
 			fragment.refresh();
 		}
 	}

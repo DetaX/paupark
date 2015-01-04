@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.listener.gps.ActivateGPSDismissListener;
@@ -21,7 +21,7 @@ import fr.univpau.paupark.pojo.Tip;
 public class Util {
 	public static final int GPS_STATUS = 43;
 	
-	public static void dialog_detail_tip(Context context, Tip tip, ArrayList<Tip> tips) {
+	public static void dialog_detail_tip(Context context, Tip tip, List<Tip> tips) {
 		
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
@@ -58,7 +58,7 @@ public class Util {
 			alertDialog.show();
 		
 	}
-	public static void dialog_detail_tip(Context context, int position, ArrayList<Tip> tips) {
+	public static void dialog_detail_tip(Context context, int position, List<Tip> tips) {
 		Tip tip = tips.get(position);
 		dialog_detail_tip(context, tip, tips);
 	}

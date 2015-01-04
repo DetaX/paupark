@@ -12,7 +12,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.List;
 
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.pojo.Tip;
@@ -23,10 +23,10 @@ public class RatingTask extends AsyncTask<Void, Void, String> {
 	private final double note;
 	private final int id;
 	private final Context context;
-	private final ArrayList<Tip> tips;
+	private final List<Tip> tips;
 	private final static String url="http://detax.eu/paupark/index.php?action=fiabilite&id=";
 	
-	public RatingTask(Context context, double note, int id, ArrayList<Tip> tips) {
+	public RatingTask(Context context, double note, int id, List<Tip> tips) {
 		this.note=note;
 		this.id=id;
 		this.context=context;

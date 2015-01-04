@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.widget.RatingBar;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import fr.univpau.paupark.asynctask.RatingTask;
 import fr.univpau.paupark.pojo.Tip;
@@ -15,8 +15,8 @@ class RatingListener implements OnClickListener {
 	private final Context context;
 	private final Tip tip;
 	private final RatingBar note;
-	private final ArrayList<Tip> tips;
-	public RatingListener(Context context, Tip tip, RatingBar note, ArrayList<Tip> tips) {
+	private final List<Tip> tips;
+	public RatingListener(Context context, Tip tip, RatingBar note, List<Tip> tips) {
 		this.context=context;
 		this.tip=tip;
 		this.note=note;

@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RatingBar;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import fr.univpau.paupark.R;
 import fr.univpau.paupark.pojo.Tip;
@@ -18,8 +18,8 @@ import fr.univpau.paupark.pojo.Tip;
 public class TipDialogListener implements OnClickListener {
 	private final Context context;
 	private final Tip tip;
-	private final ArrayList<Tip> tips;
-	public TipDialogListener(Context context, Tip tip,ArrayList<Tip> tips) {
+	private final List<Tip> tips;
+	public TipDialogListener(Context context, Tip tip,List<Tip> tips) {
 		this.context=context;
 		this.tip=tip;
 		this.tips=tips;

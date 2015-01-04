@@ -65,7 +65,7 @@ public class TipsFragment extends Fragment {
                     TipAdapter adapter = new TipAdapter(getActivity(), sublist);
                     pages.add(listview);
                     listview.setAdapter(adapter);
-                    listview.setOnItemClickListener(new TipClickListener(tips,getActivity()));
+                    listview.setOnItemClickListener(new TipClickListener(sublist,getActivity()));
                 }
             }
             ViewPager vp = (ViewPager) getActivity().findViewById(R.id.pager);

@@ -5,16 +5,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import fr.univpau.paupark.pojo.Tip;
 import fr.univpau.paupark.util.Util;
 
 public class TipClickListener implements OnItemClickListener {
-	private final ArrayList<Tip> tips;
+	private final List<Tip> tips;
 	private final Context context;
 
-	public TipClickListener(ArrayList<Tip> tips, Context context) {
+	public TipClickListener(List<Tip> tips, Context context) {
 		this.tips = tips;
 		this.context=context;
 	}

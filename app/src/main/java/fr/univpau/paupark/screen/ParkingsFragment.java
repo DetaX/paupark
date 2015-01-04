@@ -62,7 +62,7 @@ public class ParkingsFragment extends Fragment {
 
         if (Settings.PREFERENCE.getBoolean(Settings.GEOLOCATION_SETTING_KEY, false)) {
             locationListener = new CustomLocationListener(this);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 1, locationListener);
         } else if (locationListener != null)
             locationManager.removeUpdates(locationListener);
     }
